@@ -1,6 +1,6 @@
 import React from 'react';
 
-function Ship() {
+function Ship({ sprite, size }) {
   // const a = 1;
 
   return (

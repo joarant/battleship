@@ -16,6 +16,7 @@ function GameBoard() {
 
   return (
     <Grid item xs={12}>
+
       {boardA.map((row) => (
         <Grid container justifyContent="center" spacing={0}>
           {row.map((value) => (
@@ -26,7 +27,14 @@ function GameBoard() {
                   width: 100,
                   backgroundColor: (theme) => (theme.palette.mode === 'dark' ? '#1A2027' : '#fff'),
                 }}
-              />
+              >
+                <img
+                  src="images/arrow.svg"
+                  alt=""
+                  style={{ height: '100%', width: '100%', objectFit: 'contain' }}
+
+                />
+              </Paper>
             </Grid>
           ))}
         </Grid>

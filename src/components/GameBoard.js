@@ -1,8 +1,9 @@
 import React from 'react';
 import {
-  Grid, Paper,
+  Grid, Paper, Button,
 } from '@material-ui/core';
 
+// <img src="your.svg#svgView(preserveAspectRatio(none))" />
 function GameBoard() {
   const boardA = [];
   const boardB = [];
@@ -20,21 +21,24 @@ function GameBoard() {
       {boardA.map((row) => (
         <Grid container justifyContent="center" spacing={0}>
           {row.map((value) => (
-            <Grid key={value} item>
-              <Paper
+            <Grid key={value} item justifyContent="center">
+              <Grid
                 sx={{
                   height: 100,
                   width: 100,
-                  backgroundColor: (theme) => (theme.palette.mode === 'dark' ? '#1A2027' : '#fff'),
+                  opacity: 0.5,
+                  backgroundColor: (theme) => (theme.palette.mode === 'dark' ? '#1A2027' : '#ffffff'),
                 }}
               >
                 <img
                   src="images/arrow.svg"
                   alt=""
-                  style={{ height: '100%', width: '100%', objectFit: 'contain' }}
+                  // width={100}
+                  // height=
+                  style={{ height: '100%', width: '300%' }}
 
                 />
-              </Paper>
+              </Grid>
             </Grid>
           ))}
         </Grid>

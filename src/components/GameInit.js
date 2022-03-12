@@ -3,15 +3,10 @@ import { Form, Field } from 'react-final-form';
 import { FORM_ERROR } from 'final-form';
 import { TextField, Paper, Button } from '@material-ui/core';
 
-function GameInit() {
+const GameInit = ({ doStuff }) => {
   const onSubmit = async (values) => {
-    // if (values.username !== 'erikras') {
-    //   return { username: 'Unknown username' };
-    // }
-    // if (values.password !== 'finalformrocks') {
-    //   return { [FORM_ERROR]: 'Login Failed' };
-    // }
     console.log(values, 'submit');
+    doStuff(true);
   };
 
   return (
@@ -38,6 +33,7 @@ function GameInit() {
       }) => (
         <form onSubmit={handleSubmit}>
           <Paper style={{ alignContent: 'center', padding: 15 }}>
+            <Button onClick={() => doStuff()}> heiojgai </Button>
             <Field name="username1">
               {({ input, meta }) => (
                 <TextField
@@ -145,5 +141,5 @@ function GameInit() {
       )}
     />
   );
-}
+};
 export default GameInit;

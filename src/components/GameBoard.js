@@ -4,8 +4,7 @@ import {
 } from '@material-ui/core';
 import Ship from './Ship';
 
-// <img src="your.svg#svgView(preserveAspectRatio(none))" />
-function GameBoard() {
+function GameBoard(info) {
   const boardA = [];
 
   for (let index = 0; index < 8; index += 1) {

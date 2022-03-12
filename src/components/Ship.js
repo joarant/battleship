@@ -4,9 +4,9 @@ function Ship({
   sprite, size, beingMoved, aax,
 }) {
   // const a = 1;
-  function drag(ev) {
+  const drag = (ev) => {
     ev.dataTransfer.setData('text', ev.target.id);
-  }
+  };
 
   return (
 

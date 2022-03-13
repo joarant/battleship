@@ -6,6 +6,10 @@ import Ship from './Ship';
 
 function GameBoard(info) {
   const boardA = [];
+  console.log(info.info, info.info.y);
+  const x = parseInt(info.info.x, 10);
+  const y = parseInt(info.info.y, 10);
+  console.log(x, y);
 
   for (let index = 0; index < 8; index += 1) {
     boardA.push([]);
@@ -13,6 +17,7 @@ function GameBoard(info) {
       boardA[index].push(`${index}${a}`);
     }
   }
+
   useEffect(() => {
     // code to run after render goes here
     const myPics = document.getElementById('gridi');

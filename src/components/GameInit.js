@@ -1,25 +1,22 @@
 import React from 'react';
 import { Form, Field } from 'react-final-form';
-import { FORM_ERROR } from 'final-form';
 import { TextField, Paper, Button } from '@material-ui/core';
 
 const GameInit = ({ doStuff }) => {
   const onSubmit = async (values) => {
     console.log(values, 'submit');
-    doStuff(true);
+    doStuff(true, values);
   };
 
   return (
     <Form
       onSubmit={onSubmit}
       validate={(values) => {
-        // console.log(values);
         const errors = {};
         if (!values.username1) {
           errors.username1 = 'Required';
         }
         console.log(errors);
-
         return errors;
       }}
       render={({
@@ -33,7 +30,6 @@ const GameInit = ({ doStuff }) => {
       }) => (
         <form onSubmit={handleSubmit}>
           <Paper style={{ alignContent: 'center', padding: 15 }}>
-            <Button onClick={() => doStuff()}> heiojgai </Button>
             <Field name="username1">
               {({ input, meta }) => (
                 <TextField
@@ -57,10 +53,24 @@ const GameInit = ({ doStuff }) => {
 
               )}
             </Field>
-            <Field name="size">
+            <Field name="x">
               {({ input, meta }) => (
                 <TextField
-                  label="size"
+                  label="size x"
+                  type="number"
+                  placeholder="100"
+                  onChange={(v) => input.onChange(v)}
+                  error={(meta.error && meta.touched) || meta.submitError}
+                />
+
+              )}
+            </Field>
+
+            <Field name="y">
+              {({ input, meta }) => (
+                <TextField
+                  label="size y"
+                  type="number"
                   placeholder="100"
                   onChange={(v) => input.onChange(v)}
                   error={(meta.error && meta.touched) || meta.submitError}

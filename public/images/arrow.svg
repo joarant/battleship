@@ -3,9 +3,9 @@
 
 <svg
    preserveAspectRatio="none"
-   width="210mm"
-   height="297mm"
-   viewBox="0 0 210 297"
+   width="146.11499mm"
+   height="52.872818mm"
+   viewBox="0 0 146.11499 52.872818"
    version="1.1"
    id="svg5"
    inkscape:version="1.1.2 (76b9e6a115, 2022-02-25)"
@@ -25,8 +25,8 @@
      inkscape:document-units="mm"
      showgrid="false"
      inkscape:zoom="0.77593294"
-     inkscape:cx="610.87753"
-     inkscape:cy="775.84024"
+     inkscape:cx="482.6448"
+     inkscape:cy="54.128389"
      inkscape:window-width="1920"
      inkscape:window-height="1043"
      inkscape:window-x="0"
@@ -38,7 +38,8 @@
   <g
      inkscape:label="Layer 1"
      inkscape:groupmode="layer"
-     id="layer1">
+     id="layer1"
+     transform="translate(-34.09874,-136.38506)">
     <rect
        style="fill:#000000;fill-rule:evenodd;stroke-width:0.264583"
        id="rect125"

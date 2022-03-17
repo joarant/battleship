@@ -3,8 +3,9 @@ import {
   Grid, Paper, Button,
 } from '@material-ui/core';
 
-function Play(measurements, ships) {
+function Play({ measurements, ships }) {
   const boardA = [];
+  console.log(measurements);
 
   for (let index = 0; index < measurements.x; index += 1) {
     boardA.push([]);

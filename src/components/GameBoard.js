@@ -11,7 +11,6 @@ function GameBoard(info) {
   const CARRIER = { type: 'CARRIER', hitpoints: 5, coordinates: [] };
   const PATROL_BOAT = { type: 'PATROL_BOAT', hitpoints: 2, coordinates: [] };
 
-  // pelkästään shipit boardAsta ei ole hyötyöä tässä vaihessa
   // ship
   // id: { type: '', hitpoints: null, coordinates: [] };
   const ships = { id1: CARRIER, id2: PATROL_BOAT };
@@ -22,15 +21,11 @@ function GameBoard(info) {
   };
 
   const changeMovedObject = (shipId) => {
-    // const grid = document.getElementById('grid');
     window.addEventListener('mouseup', (e) => {
       const draggable = document.getElementById(shipId);
       const rect = e.target.getBoundingClientRect();
-      // console.log(rect);
       draggable.style.left = `${rect.x}px`;
       draggable.style.top = `${rect.y}px`;
-      // console.log(e.target.id);
-      // cellId, ship
       addInfoToBoardObject({ ...ships[shipId], ...{ coordinates: [e.target.id] } }, shipId);
     }, { once: true });
 
@@ -56,11 +51,7 @@ function GameBoard(info) {
       // console.log('index:', index, 'value:', index * 8 + a);
     }
   }
-  // console.log(boardA);
-  useEffect(() => {
-    // code to run after render goes here
 
-  }, []);
   return (
     <>
       <Ship imgId="id1" beingMoved={changeMovedObject} />

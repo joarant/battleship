@@ -2,8 +2,9 @@ import React, { useEffect, useState } from 'react';
 import {
   Grid, Paper, Button,
 } from '@material-ui/core';
+import BoardCell from './BoardCell';
 
-function Play({ measurements, ships }) {
+function Play({ measurements, ships, switchTurn }) {
   const boardA = [];
   console.log(measurements);
 
@@ -20,15 +21,9 @@ function Play({ measurements, ships }) {
         <Grid container justifyContent="center" spacing={0} key={row}>
           {row.map((value) => (
             <Grid key={value} item justifyContent="center">
-              <Button
+              <BoardCell
                 id={value}
-                sx={{
-                  height: 80,
-                  width: 80,
-                  backgroundColor: (theme) => (theme.palette.mode === 'dark' ? '#1A2027' : '#ffffff'),
-                }}
-                style={{ alignContent: 'center' }}
-                variant="outlined"
+                setReady={switchTurn}
               />
             </Grid>
           ))}

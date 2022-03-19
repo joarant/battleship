@@ -37,13 +37,30 @@ const Game = () => {
       && (<ReadyCheck text="Player 1" setReady={setReady} />)}
 
       {p1ShipsSet && p2ShipsSet && !gameOver && p1Turn && ReadyCheckDone
-      && (<Play measurements={{ x: 8, y: 8 }} ships={{ id1: CARRIER, id2: PATROL_BOAT }} />)}
+      && (
+      <Play
+        measurements={{ x: 8, y: 8 }}
+        ships={{ id1: CARRIER, id2: PATROL_BOAT }}
+        switchTurn={() => { setP1Turn(!p1Turn); }}
+      />
+      )}
 
       {p1ShipsSet && p2ShipsSet && !gameOver && !p1Turn && !ReadyCheckDone
-      && (<ReadyCheck text="Player 2" setReady={setReady} />)}
+      && (
+      <ReadyCheck
+        text="Player 2"
+        setReady={setReady}
+      />
+      )}
 
       {p1ShipsSet && p2ShipsSet && !gameOver && !p1Turn && ReadyCheckDone
-      && (<Play measurements={{ x: 8, y: 8 }} ships={{ id1: CARRIER, id2: PATROL_BOAT }} />)}
+      && (
+      <Play
+        measurements={{ x: 8, y: 8 }}
+        ships={{ id1: CARRIER, id2: PATROL_BOAT }}
+        switchTurn={() => { setP1Turn(!p1Turn); }}
+      />
+      )}
 
       {gameOver && (<Play info={initInfo} />)}
 

@@ -6,7 +6,9 @@ import Play from './Play';
 import ReadyCheck from './ReadyCheck';
 
 const Game = () => {
+  // id :{hit:false, ship: false}
   const [ships, setShips] = useState({ p1Fleet: {}, p2Fleet: {} });
+  const [boards, setBoards] = useState({ p1Board: {}, p2Board: {} });
 
   const [initInfo, setInitInfo] = useState();
   const [p1ShipsSet, setP1ShipsSet] = useState(true);
@@ -26,9 +28,17 @@ const Game = () => {
     setReadyCheckDone(state);
   };
 
+  const updateStatus = (board) => {
+    const tempBoards = boards;
+    tempBoards[(p1Turn ? 'p1Board' : 'p2Board')] = board;
+    setBoards(tempBoards);
+    setP1Turn(!p1Turn);
+    setReadyCheckDone(false);
+  };
+  console.log(boards);
   return (
     <>
-
+      {console.log(p1Turn, 'p1Turn')}
       {!initInfo && !p1ShipsSet && !p2ShipsSet && (<GameInit doStuff={setInfo} />)}
       {initInfo && !p1ShipsSet && (<GameBoard info={initInfo} />)}
       {initInfo && !p2ShipsSet && (<GameBoard info={initInfo} />)}
@@ -39,9 +49,11 @@ const Game = () => {
       {p1ShipsSet && p2ShipsSet && !gameOver && p1Turn && ReadyCheckDone
       && (
       <Play
-        measurements={{ x: 8, y: 8 }}
+        measurements={{ x: 4, y: 8 }}
         ships={{ id1: CARRIER, id2: PATROL_BOAT }}
-        switchTurn={() => { setP1Turn(!p1Turn); }}
+        updateBoardStatus={updateStatus}
+        // switchTurn={updateStatus}
+        currentBoard={boards.p1Board}
       />
       )}
 
@@ -56,9 +68,12 @@ const Game = () => {
       {p1ShipsSet && p2ShipsSet && !gameOver && !p1Turn && ReadyCheckDone
       && (
       <Play
-        measurements={{ x: 8, y: 8 }}
+        measurements={{ x: 4, y: 8 }}
         ships={{ id1: CARRIER, id2: PATROL_BOAT }}
-        switchTurn={() => { setP1Turn(!p1Turn); }}
+        updateBoardStatus={updateStatus}
+        // switchTurn={updateStatus}
+        currentBoard={boards.p2Board}
+
       />
       )}
 

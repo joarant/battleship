@@ -4,26 +4,37 @@ import {
 } from '@material-ui/core';
 import BoardCell from './BoardCell';
 
-function Play({ measurements, ships, switchTurn }) {
-  const boardA = [];
-  console.log(measurements);
+function Play({
+  measurements, ships, switchTurn, updateBoardStatus, currentBoard,
+}) {
+  const [board, setBoard] = useState(currentBoard);
 
-  for (let index = 0; index < measurements.x; index += 1) {
-    boardA.push([]);
-    for (let a = 0; a < measurements.y; a += 1) {
-      boardA[index].push(index * 8 + a);
+  const tempBoard = currentBoard;
+  // console.log(board);
+  if (Object.keys(tempBoard).length === 0) {
+    for (let index = 0; index < measurements.x * measurements.y; index += 1) {
+      tempBoard[index] = { hit: false, ships: false };
     }
   }
 
+  const updateBoard = (cell) => {
+    // switchTurn();
+    tempBoard[cell].hit = true;
+    updateBoardStatus(tempBoard);
+  };
+
   return (
     <Grid item xs={12} id="grid">
-      {boardA.map((row) => (
-        <Grid container justifyContent="center" spacing={0} key={row}>
-          {row.map((value) => (
-            <Grid key={value} item justifyContent="center">
+      {Array(measurements.y).fill(0).map((row, rowIndex) => (
+        <Grid container justifyContent="center" spacing={0} key={`${measurements.x + rowIndex} row`}>
+          {Array(measurements.x).fill(0).map((value, index) => (
+            <Grid key={`${index * rowIndex + index} cell`} item justifyContent="center">
+              {console.log(measurements.x, rowIndex, index, measurements.x * rowIndex + index)}
               <BoardCell
-                id={value}
-                setReady={switchTurn}
+                id={measurements.x * rowIndex + index}
+                cellId={measurements.x * rowIndex + index}
+                setReady={updateBoard}
+                isDisabled={tempBoard[measurements.x * rowIndex + index].hit}
               />
             </Grid>
           ))}

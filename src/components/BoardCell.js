@@ -3,8 +3,8 @@ import { Button, Box, Typography } from '@material-ui/core';
 import GameInit from './GameInit';
 import GameBoard from './GameBoard';
 
-const BoardCell = ({ setReady }) => {
-  const [disabled, setDisabled] = useState(false);
+const BoardCell = ({ setReady, isDisabled, cellId }) => {
+  const [disabled, setDisabled] = useState(isDisabled);
 
   return (
     <Button
@@ -16,7 +16,7 @@ const BoardCell = ({ setReady }) => {
       style={{ alignContent: 'center' }}
       variant="outlined"
       disabled={disabled}
-      onClick={() => { setDisabled(true); setReady(); }}
+      onClick={() => { setDisabled(true); setReady(cellId); }}
     />
   );
 };

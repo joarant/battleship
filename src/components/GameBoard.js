@@ -69,7 +69,7 @@ function GameBoard(info) {
                     height: 80,
                     width: 80,
                     // opacity: 0.5,
-                    backgroundColor: (theme) => (theme.palette.mode === 'dark' ? '#1A2027' : '#ffffff'),
+                    backgroundColor: (theme) => ('#ffffff'),
                   }}
                   style={{ alignContent: 'center' }}
                   variant="outlined"

@@ -17,8 +17,8 @@ const Game = () => {
   const [gameOver, setGameOver] = useState(false);
   const [ReadyCheckDone, setReadyCheckDone] = useState(false);
 
-  const CARRIER = { type: 'CARRIER', hitpoints: 5, coordinates: [] };
-  const PATROL_BOAT = { type: 'PATROL_BOAT', hitpoints: 2, coordinates: [] };
+  const CARRIER = { type: 'CARRIER', hitpoints: 5, coordinates: [0, 1, 2, 3, 4] };
+  const PATROL_BOAT = { type: 'PATROL_BOAT', hitpoints: 2, coordinates: [12, 13] };
 
   const setInfo = (info) => {
     setInitInfo(info);
@@ -52,7 +52,6 @@ const Game = () => {
         measurements={{ x: 4, y: 8 }}
         ships={{ id1: CARRIER, id2: PATROL_BOAT }}
         updateBoardStatus={updateStatus}
-        // switchTurn={updateStatus}
         currentBoard={boards.p1Board}
       />
       )}
@@ -71,7 +70,6 @@ const Game = () => {
         measurements={{ x: 4, y: 8 }}
         ships={{ id1: CARRIER, id2: PATROL_BOAT }}
         updateBoardStatus={updateStatus}
-        // switchTurn={updateStatus}
         currentBoard={boards.p2Board}
 
       />

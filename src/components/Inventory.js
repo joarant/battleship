@@ -23,7 +23,7 @@ function Invetory() {
                 sx={{
                   height: 100,
                   width: 100,
-                  backgroundColor: (theme) => (theme.palette.mode === 'dark' ? '#1A2027' : '#fff'),
+                  backgroundColor: (theme) => ('#fff'),
                 }}
               />
             </Grid>

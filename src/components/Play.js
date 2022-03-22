@@ -5,20 +5,24 @@ import {
 import BoardCell from './BoardCell';
 
 function Play({
-  measurements, ships, switchTurn, updateBoardStatus, currentBoard,
+  measurements, ships, updateBoardStatus, currentBoard,
 }) {
   const [board, setBoard] = useState(currentBoard);
 
+  // Forms cells
   const tempBoard = currentBoard;
-  // console.log(board);
   if (Object.keys(tempBoard).length === 0) {
     for (let index = 0; index < measurements.x * measurements.y; index += 1) {
-      tempBoard[index] = { hit: false, ships: false };
+      tempBoard[index] = { hit: false, ship: false };
     }
+    Object.values(ships).forEach((ship) => {
+      ship.coordinates.forEach((point) => {
+        board[point].ship = true;
+      });
+    });
   }
 
   const updateBoard = (cell) => {
-    // switchTurn();
     tempBoard[cell].hit = true;
     updateBoardStatus(tempBoard);
   };
@@ -35,6 +39,9 @@ function Play({
                 cellId={measurements.x * rowIndex + index}
                 setReady={updateBoard}
                 isDisabled={tempBoard[measurements.x * rowIndex + index].hit}
+                ship
+                // ship={tempBoard[measurements.x * rowIndex + index].ship}
+
               />
             </Grid>
           ))}

@@ -1,6 +1,5 @@
 import React, { useEffect, useState } from 'react';
 import { Button, Box, Typography } from '@material-ui/core';
-import { makeStyles, createTheme } from '@mui/styles';
 import GameInit from './GameInit';
 import GameBoard from './GameBoard';
 

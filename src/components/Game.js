@@ -1,13 +1,20 @@
 import React, { useEffect, useState } from 'react';
-import { Button } from '@material-ui/core';
+import { Grid } from '@material-ui/core';
 import GameInit from './GameInit';
 import GameBoard from './GameBoard';
 import Play from './Play';
 import ReadyCheck from './ReadyCheck';
+import GameStatus from './GameStatusScreen';
 
 const Game = () => {
   // id :{hit:false, ship: false}
-  const [ships, setShips] = useState({ p1Fleet: {}, p2Fleet: {} });
+  const [ships, setShips] = useState({
+    p1Fleet: {
+      id1: { type: 'CARRIER', hitpoints: 1, coordinates: [1] },
+      id2: { type: 'PATROL_BOAT', hitpoints: 1, coordinates: [0] },
+    },
+    p2Fleet: { id3: { type: 'CARRIER', hitpoints: 1, coordinates: [1] } },
+  });
   const [boards, setBoards] = useState({ p1Board: {}, p2Board: {} });
 
   const [initInfo, setInitInfo] = useState();
@@ -17,9 +24,6 @@ const Game = () => {
   const [gameOver, setGameOver] = useState(false);
   const [ReadyCheckDone, setReadyCheckDone] = useState(false);
 
-  const CARRIER = { type: 'CARRIER', hitpoints: 5, coordinates: [0, 1, 2, 3, 4] };
-  const PATROL_BOAT = { type: 'PATROL_BOAT', hitpoints: 2, coordinates: [12, 13] };
-
   const setInfo = (info) => {
     setInitInfo(info);
   };
@@ -28,17 +32,26 @@ const Game = () => {
     setReadyCheckDone(state);
   };
 
-  const updateStatus = (board) => {
+  const setGameDone = () => {
+    setGameOver(true);
+  };
+
+  const updateStatus = (board, ship) => {
     const tempBoards = boards;
     tempBoards[(p1Turn ? 'p1Board' : 'p2Board')] = board;
+    if (ship != null) {
+      const tempShips = ships;
+      console.log('dasx');
+      tempShips[(p1Turn ? 'p2Fleet' : 'p1Fleet')][ship].hitpoints -= 1;
+      setShips(tempShips);
+    }
     setBoards(tempBoards);
     setP1Turn(!p1Turn);
     setReadyCheckDone(false);
   };
-  console.log(boards);
+
   return (
     <>
-      {console.log(p1Turn, 'p1Turn')}
       {!initInfo && !p1ShipsSet && !p2ShipsSet && (<GameInit doStuff={setInfo} />)}
       {initInfo && !p1ShipsSet && (<GameBoard info={initInfo} />)}
       {initInfo && !p2ShipsSet && (<GameBoard info={initInfo} />)}
@@ -48,12 +61,15 @@ const Game = () => {
 
       {p1ShipsSet && p2ShipsSet && !gameOver && p1Turn && ReadyCheckDone
       && (
-      <Play
-        measurements={{ x: 4, y: 8 }}
-        ships={{ id1: CARRIER, id2: PATROL_BOAT }}
-        updateBoardStatus={updateStatus}
-        currentBoard={boards.p1Board}
-      />
+      <Grid>
+        <GameStatus fleets={ships} gameOverFunc={setGameDone} />
+        <Play
+          measurements={{ x: 4, y: 8 }}
+          ships={ships.p2Fleet}
+          updateBoardStatus={updateStatus}
+          currentBoard={boards.p1Board}
+        />
+      </Grid>
       )}
 
       {p1ShipsSet && p2ShipsSet && !gameOver && !p1Turn && !ReadyCheckDone
@@ -66,13 +82,16 @@ const Game = () => {
 
       {p1ShipsSet && p2ShipsSet && !gameOver && !p1Turn && ReadyCheckDone
       && (
-      <Play
-        measurements={{ x: 4, y: 8 }}
-        ships={{ id1: CARRIER, id2: PATROL_BOAT }}
-        updateBoardStatus={updateStatus}
-        currentBoard={boards.p2Board}
+      <>
+        <GameStatus fleets={ships} gameOverFunc={setGameDone} />
+        <Play
+          measurements={{ x: 4, y: 8 }}
+          ships={ships.p1Fleet}
+          updateBoardStatus={updateStatus}
+          currentBoard={boards.p2Board}
+        />
+      </>
 
-      />
       )}
 
       {gameOver && (<Play info={initInfo} />)}

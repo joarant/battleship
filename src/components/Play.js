@@ -13,18 +13,20 @@ function Play({
   const tempBoard = currentBoard;
   if (Object.keys(tempBoard).length === 0) {
     for (let index = 0; index < measurements.x * measurements.y; index += 1) {
-      tempBoard[index] = { hit: false, ship: false };
+      tempBoard[index] = { hit: false, ship: false, shipId: null };
     }
-    Object.values(ships).forEach((ship) => {
-      ship.coordinates.forEach((point) => {
+    Object.entries(ships).forEach((ship) => {
+      ship[1].coordinates.forEach((point) => {
         board[point].ship = true;
+        // eslint-disable-next-line prefer-destructuring
+        board[point].shipId = ship[0];
       });
     });
   }
 
   const updateBoard = (cell) => {
     tempBoard[cell].hit = true;
-    updateBoardStatus(tempBoard);
+    updateBoardStatus(tempBoard, tempBoard[cell]?.shipId);
   };
 
   return (
@@ -33,15 +35,12 @@ function Play({
         <Grid container justifyContent="center" spacing={0} key={`${measurements.x + rowIndex} row`}>
           {Array(measurements.x).fill(0).map((value, index) => (
             <Grid key={`${index * rowIndex + index} cell`} item justifyContent="center">
-              {console.log(measurements.x, rowIndex, index, measurements.x * rowIndex + index)}
               <BoardCell
                 id={measurements.x * rowIndex + index}
                 cellId={measurements.x * rowIndex + index}
                 setReady={updateBoard}
                 isDisabled={tempBoard[measurements.x * rowIndex + index].hit}
-                ship
-                // ship={tempBoard[measurements.x * rowIndex + index].ship}
-
+                ship={tempBoard[measurements.x * rowIndex + index].ship}
               />
             </Grid>
           ))}

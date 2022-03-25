@@ -6,7 +6,7 @@ import Ship from './Ship';
 
 // https://www.w3schools.com/howto/howto_js_draggable.asp
 // https://stackoverflow.com/questions/1009753/pass-mouse-events-through-absolutely-positione-elementd
-function GameBoard(info) {
+function SetPieces(info) {
   const boardA = [];
   const CARRIER = { type: 'CARRIER', hitpoints: 5, coordinates: [] };
   const PATROL_BOAT = { type: 'PATROL_BOAT', hitpoints: 2, coordinates: [] };
@@ -82,4 +82,4 @@ function GameBoard(info) {
     </>
   );
 }
-export default GameBoard;
+export default SetPieces;

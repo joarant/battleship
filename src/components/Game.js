@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { Grid } from '@material-ui/core';
 import GameInit from './GameInit';
-import GameBoard from './GameBoard';
+import SetPieces from './SetPieces';
 import Play from './Play';
 import ReadyCheck from './ReadyCheck';
 import GameStatus from './GameStatusScreen';
@@ -18,9 +18,9 @@ const Game = () => {
   });
   const [boards, setBoards] = useState({ p1Board: {}, p2Board: {} });
 
-  const [initInfo, setInitInfo] = useState();
-  const [p1ShipsSet, setP1ShipsSet] = useState(true);
-  const [p2ShipsSet, setP2ShipsSet] = useState(true);
+  const [initInfo, setInitInfo] = useState({});
+  const [p1ShipsSet, setP1ShipsSet] = useState(false);
+  const [p2ShipsSet, setP2ShipsSet] = useState(false);
   const [p1Turn, setP1Turn] = useState(true);
   const [gameOver, setGameOver] = useState(false);
   const [ReadyCheckDone, setReadyCheckDone] = useState(false);
@@ -61,8 +61,8 @@ const Game = () => {
   return (
     <>
       {!initInfo && !p1ShipsSet && !p2ShipsSet && (<GameInit doStuff={setInfo} />)}
-      {initInfo && !p1ShipsSet && (<GameBoard info={initInfo} />)}
-      {initInfo && !p2ShipsSet && (<GameBoard info={initInfo} />)}
+      {initInfo && !p1ShipsSet && (<SetPieces info={initInfo} />)}
+      {initInfo && !p2ShipsSet && p1ShipsSet && (<SetPieces info={initInfo} />)}
 
       {p1ShipsSet && p2ShipsSet && !gameOver && p1Turn && !ReadyCheckDone
       && (<ReadyCheck text="Player 1" setReady={setReady} />)}

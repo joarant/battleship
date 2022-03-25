@@ -7,14 +7,8 @@ import calculateHitpoints from '../utils/calculateHitpoints';
 const GameStatus = ({
   fleets, gameOverFunc,
 }) => {
-  const [disabled, setDisabled] = useState();
-
   const hitpointsP1 = calculateHitpoints(Object.values(fleets.p1Fleet));
   const hitpointsP2 = calculateHitpoints(Object.values(fleets.p2Fleet));
-
-  if (hitpointsP1 === 0 || hitpointsP2 === 0) {
-    gameOverFunc();
-  }
 
   return (
     <Box style={{
@@ -40,7 +34,7 @@ const GameStatus = ({
         <Button
           style={{ alignContent: 'center', backgroundColor: '#ffffff', color: 'black' }}
           variant="contained"
-          onClick={() => gameOverFunc}
+          onClick={() => gameOverFunc()}
         >
           End Game
         </Button>

@@ -5,6 +5,7 @@ import GameBoard from './GameBoard';
 import Play from './Play';
 import ReadyCheck from './ReadyCheck';
 import GameStatus from './GameStatusScreen';
+import calculateHitpoints from '../utils/calculateHitpoints';
 
 const Game = () => {
   // id :{hit:false, ship: false}
@@ -35,6 +36,13 @@ const Game = () => {
   const setGameDone = () => {
     setGameOver(true);
   };
+
+  const hitpointsP1 = calculateHitpoints(Object.values(ships.p1Fleet));
+  const hitpointsP2 = calculateHitpoints(Object.values(ships.p2Fleet));
+
+  if ((hitpointsP1 === 0 || hitpointsP2 === 0) && !gameOver) {
+    setGameDone();
+  }
 
   const updateStatus = (board, ship) => {
     const tempBoards = boards;
@@ -94,7 +102,7 @@ const Game = () => {
 
       )}
 
-      {gameOver && (<Play info={initInfo} />)}
+      {gameOver}
 
     </>
   );

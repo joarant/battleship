@@ -1,21 +1,24 @@
 import React, { useEffect, useState } from 'react';
 
 function Ship({
-  sprite, size, beingMoved, imgId,
+  sprite, size, setShip, imgId,
 }) {
   const [mouseTransparent, setMouseTransparent] = useState(false);
   let initialPosition;
   let ship = null;
   let initMousePosWithinObject = null;
+  let horizontalOrientation = true;
 
   const rotateShip = (es) => {
     if (es.key === 'r' || es.key === 'R') {
-      if (ship.style.transform === 'rotate(270deg)') {
+      if (ship.style.transform === 'rotate(90deg)') {
+        horizontalOrientation = true;
         ship.style.transform = 'rotate(360deg)';
       } else {
-        ship.style.transform = 'rotate(270deg)';
+        horizontalOrientation = false;
+        ship.style.transform = 'rotate(90deg)';
       }
-      console.log(ship.getBoundingClientRect());
+      // console.log(ship.getBoundingClientRect());
     }
   };
 
@@ -47,7 +50,7 @@ function Ship({
       // grabCell = floor(grab point / (ship.size.x /hitpointCount))
       const grabCell = Math.floor(initMousePosWithinObject.x
        / (160 / size));
-      beingMoved(imgId, initialPosition, grabCell);
+      setShip(imgId, initialPosition, grabCell, horizontalOrientation);
     }
 
     function dragMouseDown(e) {
@@ -84,7 +87,7 @@ function Ship({
       id={imgId}
       src="images/arrow.svg"
       alt=""
-      width={160}
+      width={80 * size}
       height={80}
       style={{ position: 'absolute', pointerEvents: (mouseTransparent ? 'none' : 'auto') }}
     />

@@ -6,16 +6,15 @@ import Ship from './Ship';
 
 // https://www.w3schools.com/howto/howto_js_draggable.asp
 // https://stackoverflow.com/questions/1009753/pass-mouse-events-through-absolutely-positione-elementd
-function SetPieces(info) {
+function SetPieces({ info, shipsSet }) {
   const board = [];
-  const board2 = [];
-
-  const CARRIER = { type: 'CARRIER', hitpoints: 5, coordinates: [] };
-  const PATROL_BOAT = { type: 'PATROL_BOAT', hitpoints: 2, coordinates: [] };
+  console.log(info, 'dwak');
+  const x = parseInt(info.x, 10);
+  const y = parseInt(info.y, 10);
 
   // ship
   // id: { type: '', hitpoints: null, coordinates: [] };
-  const ships = { id1: CARRIER, id2: PATROL_BOAT };
+  const ships = { ...info.availableShips };
 
   const addInfoToBoardObject = (newObject, shipId) => {
     ships[shipId] = newObject;
@@ -26,26 +25,26 @@ function SetPieces(info) {
     // math.floor(target.id / rivin pituus) = sama kaikilla jotka ovat samassa rivissä
     // mod(target.id/ rivin pituus) on sama kaikilla jotka ovat samassa pystyrivissä
     if (shipOrientation) {
-      const refrenceNum = Math.floor(parseInt(targetCell.id, 10) / 8);
+      const refrenceNum = Math.floor(parseInt(targetCell.id, 10) / x);
       for (let index = 0; index < shipSize; index += 1) {
         const nextCell = document.getElementById(parseInt(targetCell.id, 10) + index);
         if (nextCell === null) {
           return false;
         }
-        if (!(Math.floor(parseInt(nextCell.id, 10) / 8) === refrenceNum)) {
+        if (!(Math.floor(parseInt(nextCell.id, 10) / x) === refrenceNum)) {
           console.log('laiton');
           return false;
         }
       }
     } else {
-      const refrenceNum = parseInt(targetCell.id, 10) % 8;
+      const refrenceNum = parseInt(targetCell.id, 10) % x;
       for (let index = 0; index < shipSize; index += 1) {
-        const nextCell = document.getElementById(parseInt(targetCell.id, 10) + index * 8);
+        const nextCell = document.getElementById(parseInt(targetCell.id, 10) + index * x);
         if (nextCell === null) {
           return false;
         }
 
-        if (!(parseInt(nextCell.id, 10) % 8 === refrenceNum)) {
+        if (!(parseInt(nextCell.id, 10) % x === refrenceNum)) {
           console.log('laiton');
           return false;
         }
@@ -54,19 +53,18 @@ function SetPieces(info) {
     return true;
   };
 
-  const changeMovedObject = (shipId, initialPosition, objectGrabbedCell) => {
+  const changeMovedObject = (shipId, initialPosition, objectGrabbedCell, horizontalOrientation) => {
     window.addEventListener('mouseup', (e) => {
       const draggable = document.getElementById(shipId);
       const correctCell = document.getElementById(
         (parseInt(e.target.id, 10) - objectGrabbedCell).toString(),
       );
 
-      if (board.findIndex((element) => element === correctCell?.id) !== -1
-      && checkIfMoveIsLegal(5, false, correctCell)) {
+      if (board.includes(correctCell?.id)
+      && checkIfMoveIsLegal(ships[shipId].hitpoints, horizontalOrientation, correctCell)) {
         // const correctCell = document.getElementById(
         //   (parseInt(e.target.id, 10) - objectGrabbedCell).toString(),
         // );
-        console.log(checkIfMoveIsLegal(5, false, correctCell));
         const rect = correctCell.getBoundingClientRect();
         draggable.style.left = `${rect.x}px`;
         draggable.style.top = `${rect.y}px`;
@@ -84,31 +82,34 @@ function SetPieces(info) {
     }, { once: true });
   };
 
-  // console.log(info.info, info.info.y);
-  const x = parseInt(info.info.x, 10);
-  const y = parseInt(info.info.y, 10);
-  // console.log(x, y);
-
-  for (let index = 0; index < 8; index += 1) {
-    for (let a = 0; a < 8; a += 1) {
-      board.push((index * 8 + a).toString());
+  for (let index = 0; index < y; index += 1) {
+    for (let a = 0; a < x; a += 1) {
+      board.push((index * y + a).toString());
     }
   }
 
   return (
     <>
-      <Ship imgId="id1" beingMoved={changeMovedObject} size={2} />
-      <Ship imgId="id2" beingMoved={changeMovedObject} size={2} />
+      {/* <Ship imgId="id1" setShip={changeMovedObject} size={2} />
+      <Ship imgId="id2" setShip={changeMovedObject} size={2} /> */}
+      {Object.keys(ships).map((ship) => (
+        <Ship
+          imgId={ship}
+          setShip={changeMovedObject}
+          size={ships[ship].hitpoints}
+          key={ship}
+        />
+      ))}
 
       <Grid item xs={12} id="grid">
 
-        {Array(8).fill(0).map((column, columnIndex) => (
-          <Grid container justifyContent="center" spacing={0} key={`${8 + columnIndex} col`}>
-            {Array(8).fill(0).map((cell, index) => (
-              <Grid key={board[8 * columnIndex + index]} item justifyContent="center">
+        {Array(y).fill(0).map((column, columnIndex) => (
+          <Grid container justifyContent="center" spacing={0} key={`${y + columnIndex} col`}>
+            {Array(x).fill(0).map((cell, index) => (
+              <Grid key={board[y * columnIndex + index]} item justifyContent="center">
                 {/* {console.log(index * columnIndex + index)} */}
                 <Paper
-                  id={board[8 * columnIndex + index]}
+                  id={board[y * columnIndex + index]}
                   sx={{
                     height: 80,
                     width: 80,
@@ -123,6 +124,7 @@ function SetPieces(info) {
           </Grid>
         ))}
       </Grid>
+      <Button onClick={() => shipsSet(ships)}> Done </Button>
     </>
   );
 }

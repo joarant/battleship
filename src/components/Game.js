@@ -11,22 +11,43 @@ const Game = () => {
   // id :{hit:false, ship: false}
   const [ships, setShips] = useState({
     p1Fleet: {
-      id1: { type: 'CARRIER', hitpoints: 1, coordinates: [1] },
-      id2: { type: 'PATROL_BOAT', hitpoints: 1, coordinates: [0] },
+
     },
-    p2Fleet: { id3: { type: 'CARRIER', hitpoints: 1, coordinates: [1] } },
+    p2Fleet: {
+
+    },
   });
   const [boards, setBoards] = useState({ p1Board: {}, p2Board: {} });
 
-  const [initInfo, setInitInfo] = useState({});
+  const [initInfo, setInitInfo] = useState();
   const [p1ShipsSet, setP1ShipsSet] = useState(false);
   const [p2ShipsSet, setP2ShipsSet] = useState(false);
   const [p1Turn, setP1Turn] = useState(true);
   const [gameOver, setGameOver] = useState(false);
   const [ReadyCheckDone, setReadyCheckDone] = useState(false);
 
+  const shipObjects = {
+    carrier: { type: 'CARRIER', hitpoints: 5, coordinates: [] },
+    battleship: { type: 'BATTLESHIP', hitpoints: 2, coordinates: [] },
+    cruiser: { type: 'CRUISER', hitpoints: 2, coordinates: [] },
+    submarine: { type: 'SUBMARINE', hitpoints: 2, coordinates: [] },
+    destroyer: { type: 'DESTROYER', hitpoints: 2, coordinates: [] },
+  };
+
   const setInfo = (info) => {
-    setInitInfo(info);
+    const availableShips = {};
+    const shipKeys = ['carrier', 'battleship', 'cruiser', 'submarine', 'destroyer'];
+    Object.keys(info).forEach((key) => {
+      if (shipKeys.includes(key)) {
+        console.log('ss');
+        for (let index = 0; index < info[key]; index += 1) {
+          availableShips[(key + index)] = { ...shipObjects[key] };
+        }
+      }
+    });
+    const infoTemp = info;
+    infoTemp.availableShips = availableShips;
+    setInitInfo(infoTemp);
   };
 
   const setReady = (state) => {
@@ -40,7 +61,7 @@ const Game = () => {
   const hitpointsP1 = calculateHitpoints(Object.values(ships.p1Fleet));
   const hitpointsP2 = calculateHitpoints(Object.values(ships.p2Fleet));
 
-  if ((hitpointsP1 === 0 || hitpointsP2 === 0) && !gameOver) {
+  if ((hitpointsP1 === 0 || hitpointsP2 === 0) && !gameOver && (p1ShipsSet && p2ShipsSet)) {
     setGameDone();
   }
 
@@ -58,11 +79,25 @@ const Game = () => {
     setReadyCheckDone(false);
   };
 
+  const setFleet = (fleet) => {
+    console.log(fleet, ',ok');
+    const tempShips = ships;
+    tempShips[(!p1ShipsSet && !p2ShipsSet ? 'p1Fleet' : 'p2Fleet')] = fleet;
+    console.log(tempShips, ',ok2');
+
+    if (!p1ShipsSet) {
+      setP1ShipsSet(true);
+    } else {
+      setP2ShipsSet(true);
+    }
+    setShips(tempShips);
+  };
+
   return (
     <>
-      {!initInfo && !p1ShipsSet && !p2ShipsSet && (<GameInit doStuff={setInfo} />)}
-      {initInfo && !p1ShipsSet && (<SetPieces info={initInfo} />)}
-      {initInfo && !p2ShipsSet && p1ShipsSet && (<SetPieces info={initInfo} />)}
+      {!initInfo && !p1ShipsSet && !p2ShipsSet && (<GameInit setGameParameters={setInfo} />)}
+      {initInfo && !p1ShipsSet && (<SetPieces info={initInfo} shipsSet={setFleet} />)}
+      {initInfo && !p2ShipsSet && p1ShipsSet && (<SetPieces info={initInfo} shipsSet={setFleet} />)}
 
       {p1ShipsSet && p2ShipsSet && !gameOver && p1Turn && !ReadyCheckDone
       && (<ReadyCheck text="Player 1" setReady={setReady} />)}
@@ -72,7 +107,7 @@ const Game = () => {
       <Grid>
         <GameStatus fleets={ships} gameOverFunc={setGameDone} />
         <Play
-          measurements={{ x: 4, y: 8 }}
+          measurements={{ x: parseInt(initInfo.x, 10), y: parseInt(initInfo.y, 10) }}
           ships={ships.p2Fleet}
           updateBoardStatus={updateStatus}
           currentBoard={boards.p1Board}
@@ -93,13 +128,12 @@ const Game = () => {
       <>
         <GameStatus fleets={ships} gameOverFunc={setGameDone} />
         <Play
-          measurements={{ x: 4, y: 8 }}
+          measurements={{ x: parseInt(initInfo.x, 10), y: parseInt(initInfo.y, 10) }}
           ships={ships.p1Fleet}
           updateBoardStatus={updateStatus}
           currentBoard={boards.p2Board}
         />
       </>
-
       )}
 
       {gameOver}

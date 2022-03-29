@@ -1,11 +1,13 @@
 import React from 'react';
 import { Form, Field } from 'react-final-form';
-import { TextField, Paper, Button } from '@material-ui/core';
+import {
+  TextField, Paper, Button, Grid,
+} from '@material-ui/core';
 
-const GameInit = ({ doStuff }) => {
+const GameInit = ({ setGameParameters }) => {
   const onSubmit = async (values) => {
     console.log(values, 'submit');
-    doStuff(true, values);
+    setGameParameters(values);
   };
 
   return (
@@ -13,6 +15,7 @@ const GameInit = ({ doStuff }) => {
       onSubmit={onSubmit}
       validate={(values) => {
         const errors = {};
+        const requiredFields = ['username1', 'username2'];
         if (!values.username1) {
           errors.username1 = 'Required';
         }
@@ -30,110 +33,117 @@ const GameInit = ({ doStuff }) => {
       }) => (
         <form onSubmit={handleSubmit}>
           <Paper style={{ alignContent: 'center', padding: 15 }}>
-            <Field name="username1">
-              {({ input, meta }) => (
-                <TextField
-                  label="player 1"
-                  placeholder="player 1"
-                  onChange={(v) => input.onChange(v)}
-                  error={(meta.error && meta.touched) || meta.submitError}
-                />
+            <Grid style={{ alignContent: 'center', padding: 15 }}>
+              <Field name="username1">
+                {({ input, meta }) => (
+                  <TextField
+                    label="player 1"
+                    placeholder="player 1"
+                    onChange={(v) => input.onChange(v)}
+                    error={(meta.error && meta.touched) || meta.submitError}
+                  />
 
-              )}
-            </Field>
+                )}
+              </Field>
 
-            <Field name="username2">
-              {({ input, meta }) => (
-                <TextField
-                  label="player 1"
-                  placeholder="player 1"
-                  onChange={(v) => input.onChange(v)}
-                  error={(meta.error && meta.touched) || meta.submitError}
-                />
+              <Field name="username2">
+                {({ input, meta }) => (
+                  <TextField
+                    label="player 2"
+                    placeholder="player 2"
+                    onChange={(v) => input.onChange(v)}
+                    error={(meta.error && meta.touched) || meta.submitError}
+                  />
 
-              )}
-            </Field>
-            <Field name="x">
-              {({ input, meta }) => (
-                <TextField
-                  label="size x"
-                  type="number"
-                  placeholder="100"
-                  onChange={(v) => input.onChange(v)}
-                  error={(meta.error && meta.touched) || meta.submitError}
-                />
+                )}
+              </Field>
+              <Field name="x">
+                {({ input, meta }) => (
+                  <TextField
+                    label="size x"
+                    type="number"
+                    placeholder="10"
+                    onChange={(v) => input.onChange(v)}
+                    error={(meta.error && meta.touched) || meta.submitError}
+                  />
 
-              )}
-            </Field>
+                )}
+              </Field>
 
-            <Field name="y">
-              {({ input, meta }) => (
-                <TextField
-                  label="size y"
-                  type="number"
-                  placeholder="100"
-                  onChange={(v) => input.onChange(v)}
-                  error={(meta.error && meta.touched) || meta.submitError}
-                />
+              <Field name="y">
+                {({ input, meta }) => (
+                  <TextField
+                    label="size y"
+                    type="number"
+                    placeholder="10"
+                    onChange={(v) => input.onChange(v)}
+                    error={(meta.error && meta.touched) || meta.submitError}
+                  />
 
-              )}
-            </Field>
+                )}
+              </Field>
 
-            <Field name="carrier">
-              {({ input, meta }) => (
-                <TextField
-                  label="carrier count"
-                  placeholder="1"
-                  onChange={(v) => input.onChange(v)}
-                  error={(meta.error && meta.touched) || meta.submitError}
-                />
+              <Field name="carrier">
+                {({ input, meta }) => (
+                  <TextField
+                    label="carrier count"
+                    type="number"
+                    placeholder="1"
+                    onChange={(v) => input.onChange(v)}
+                    error={(meta.error && meta.touched) || meta.submitError}
+                  />
 
-              )}
-            </Field>
-            <Field name="Battleship">
-              {({ input, meta }) => (
-                <TextField
-                  label="Battleship count"
-                  placeholder="2"
-                  onChange={(v) => input.onChange(v)}
-                  error={(meta.error && meta.touched) || meta.submitError}
-                />
+                )}
+              </Field>
+              <Field name="battleship">
+                {({ input, meta }) => (
+                  <TextField
+                    label="battleship count"
+                    placeholder="2"
+                    type="number"
+                    onChange={(v) => input.onChange(v)}
+                    error={(meta.error && meta.touched) || meta.submitError}
+                  />
 
-              )}
-            </Field>
-            <Field name="cruiser">
-              {({ input, meta }) => (
-                <TextField
-                  label="cruiser count"
-                  placeholder="3"
-                  onChange={(v) => input.onChange(v)}
-                  error={(meta.error && meta.touched) || meta.submitError}
-                />
+                )}
+              </Field>
+              <Field name="cruiser">
+                {({ input, meta }) => (
+                  <TextField
+                    label="cruiser count"
+                    placeholder="3"
+                    type="number"
+                    onChange={(v) => input.onChange(v)}
+                    error={(meta.error && meta.touched) || meta.submitError}
+                  />
 
-              )}
-            </Field>
-            <Field name="submarine">
-              {({ input, meta }) => (
-                <TextField
-                  label="submarine count"
-                  placeholder="4"
-                  onChange={(v) => input.onChange(v)}
-                  error={(meta.error && meta.touched) || meta.submitError}
-                />
+                )}
+              </Field>
+              <Field name="submarine">
+                {({ input, meta }) => (
+                  <TextField
+                    label="submarine count"
+                    placeholder="4"
+                    type="number"
+                    onChange={(v) => input.onChange(v)}
+                    error={(meta.error && meta.touched) || meta.submitError}
+                  />
 
-              )}
-            </Field>
-            <Field name="destroyer">
-              {({ input, meta }) => (
-                <TextField
-                  label="destroyer count"
-                  placeholder="5"
-                  onChange={(v) => input.onChange(v)}
-                  error={(meta.error && meta.touched) || meta.submitError}
-                />
+                )}
+              </Field>
+              <Field name="destroyer">
+                {({ input, meta }) => (
+                  <TextField
+                    label="destroyer count"
+                    placeholder="5"
+                    type="number"
+                    onChange={(v) => input.onChange(v)}
+                    error={(meta.error && meta.touched) || meta.submitError}
+                  />
 
-              )}
-            </Field>
+                )}
+              </Field>
+            </Grid>
           </Paper>
           {submitError && <div className="error">{submitError}</div>}
           <Button type="submit" disabled={submitting} variant="outlined">

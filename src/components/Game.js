@@ -108,12 +108,12 @@ const Game = () => {
       {initInfo && !p2ShipsSet && p1ShipsSet && (<SetPieces info={initInfo} shipsSet={setFleet} />)}
 
       {p1ShipsSet && p2ShipsSet && !gameOver && p1Turn && !ReadyCheckDone
-      && (<ReadyCheck text="Player 1" setReady={setReady} />)}
+      && (<ReadyCheck text={`${initInfo.player1}`} setReady={setReady} />)}
 
       {p1ShipsSet && p2ShipsSet && !gameOver && p1Turn && ReadyCheckDone
       && (
       <Grid>
-        <GameStatus fleets={ships} gameOverFunc={setGameDone} />
+        <GameStatus fleets={ships} gameOverFunc={setGameDone} info={initInfo} />
         <Play
           measurements={{ x: parseInt(initInfo.x, 10), y: parseInt(initInfo.y, 10) }}
           ships={ships.p2Fleet}
@@ -126,7 +126,7 @@ const Game = () => {
       {p1ShipsSet && p2ShipsSet && !gameOver && !p1Turn && !ReadyCheckDone
       && (
       <ReadyCheck
-        text="Player 2"
+        text={`${initInfo.player2}`}
         setReady={setReady}
       />
       )}
@@ -134,7 +134,7 @@ const Game = () => {
       {p1ShipsSet && p2ShipsSet && !gameOver && !p1Turn && ReadyCheckDone
       && (
       <>
-        <GameStatus fleets={ships} gameOverFunc={setGameDone} />
+        <GameStatus fleets={ships} gameOverFunc={setGameDone} info={initInfo} />
         <Play
           measurements={{ x: parseInt(initInfo.x, 10), y: parseInt(initInfo.y, 10) }}
           ships={ships.p1Fleet}

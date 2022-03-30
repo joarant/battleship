@@ -5,7 +5,7 @@ import {
 import calculateHitpoints from '../utils/calculateHitpoints';
 
 const GameStatus = ({
-  fleets, gameOverFunc,
+  fleets, gameOverFunc, info,
 }) => {
   const hitpointsP1 = calculateHitpoints(Object.values(fleets.p1Fleet));
   const hitpointsP2 = calculateHitpoints(Object.values(fleets.p2Fleet));
@@ -21,14 +21,11 @@ const GameStatus = ({
         </Typography>
 
         <Typography>
-          Player 1 hitpoints:
-          {hitpointsP1}
+          {`${info.player1} hitpoints: ${hitpointsP1}`}
         </Typography>
 
         <Typography>
-          Player 2 hitpoints:
-          {hitpointsP2}
-
+          {`${info.player2} hitpoints: ${hitpointsP2}`}
         </Typography>
 
         <Button

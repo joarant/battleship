@@ -65,6 +65,11 @@ const Game = () => {
     setGameDone();
   }
 
+  const switchTurns = () => {
+    setP1Turn(!p1Turn);
+    setReadyCheckDone(false);
+  };
+
   const updateStatus = (board, ship) => {
     const tempBoards = boards;
     tempBoards[(p1Turn ? 'p1Board' : 'p2Board')] = board;
@@ -73,10 +78,13 @@ const Game = () => {
       console.log('dasx');
       tempShips[(p1Turn ? 'p2Fleet' : 'p1Fleet')][ship].hitpoints -= 1;
       setShips(tempShips);
+      if (tempShips[(p1Turn ? 'p2Fleet' : 'p1Fleet')][ship].hitpoints === 0) {
+        switchTurns();
+      }
+    } else {
+      switchTurns();
     }
     setBoards(tempBoards);
-    setP1Turn(!p1Turn);
-    setReadyCheckDone(false);
   };
 
   const setFleet = (fleet) => {

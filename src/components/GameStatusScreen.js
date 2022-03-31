@@ -21,11 +21,11 @@ const GameStatus = ({
         </Typography>
 
         <Typography>
-          {`${info.player1} hitpoints: ${hitpointsP1}`}
+          {`${info.player1} hitpoints: ${calculateHitpoints(Object.values(fleets.p1Fleet))}`}
         </Typography>
 
         <Typography>
-          {`${info.player2} hitpoints: ${hitpointsP2}`}
+          {`${info.player2} hitpoints: ${calculateHitpoints(Object.values(fleets.p2Fleet))}`}
         </Typography>
 
         <Button

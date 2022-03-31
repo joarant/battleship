@@ -39,9 +39,6 @@ const GameInit = ({ setGameParameters }) => {
         });
 
         gridSizeFields.forEach((element) => {
-          console.log(parseInt(values[gridSizeFields[0]], 10)
-          * parseInt(values[gridSizeFields[1]], 10) < minSize);
-
           if (!values[element]
              || parseInt(values[gridSizeFields[0]], 10)
              * parseInt(values[gridSizeFields[1]], 10) < minSize

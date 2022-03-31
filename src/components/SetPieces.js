@@ -8,7 +8,6 @@ import Ship from './Ship';
 // https://stackoverflow.com/questions/1009753/pass-mouse-events-through-absolutely-positione-elementd
 function SetPieces({ info, shipsSet }) {
   const board = [];
-  console.log(info, 'dwak');
   const x = parseInt(info.x, 10);
   const y = parseInt(info.y, 10);
 
@@ -74,15 +73,23 @@ function SetPieces({ info, shipsSet }) {
         draggable.style.left = `${rect.x}px`;
         draggable.style.top = `${rect.y}px`;
 
-        // console.log(rect.x, rect.y, 'target rect');
-        // console.log(draggable.style.left, draggable.style.top, 'drag');
-
         const coordinateArray = [];
-        for (let index = parseInt(e.target.id, 10) - objectGrabbedCell;
-          index < parseInt(e.target.id, 10) - objectGrabbedCell + ships[shipId].hitpoints;
-          index += 1) {
-          coordinateArray.push(index.toString());
+        if (!horizontalOrientation) {
+          console.log('pysty');
+          for (let index = 0; index < ships[shipId].hitpoints; index += 1) {
+            coordinateArray.push((parseInt(correctCell.id, 10) + index * x).toString());
+          }
+        } else {
+          // for (let index = parseInt(e.target.id, 10) - objectGrabbedCell;
+          //   index < parseInt(e.target.id, 10) - objectGrabbedCell + ships[shipId].hitpoints;
+          //   index += 1) {
+          //   coordinateArray.push(index.toString());
+          // }
+          for (let index = 0; index < ships[shipId].hitpoints; index += 1) {
+            coordinateArray.push((parseInt(correctCell.id, 10) + index).toString());
+          }
         }
+        console.log(coordinateArray);
         addInfoToBoardObject({ ...ships[shipId], ...{ coordinates: coordinateArray } }, shipId);
       } else {
         draggable.style.left = `${initialPosition.x}px`;

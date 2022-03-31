@@ -5,10 +5,10 @@ function Ship({
 }) {
   const [mouseTransparent, setMouseTransparent] = useState(false);
   const [horizontalOrientation, setHorizontalOrientation] = useState(true);
+  const [initMousePosWithinObject, setInitMousePosWithinObject] = useState(null);
 
   let initialPosition;
   let ship = null;
-  let initMousePosWithinObject = null;
 
   const rotateShip = (es) => {
     if (es.key === 'r' || es.key === 'R') {
@@ -18,6 +18,20 @@ function Ship({
         setHorizontalOrientation(false);
       }
     }
+  };
+
+  const closeDragElement = () => {
+    /* stop moving when mouse button is released: */
+    window.removeEventListener('keyup', rotateShip);
+    document.onmouseup = null;
+    document.onmousemove = null;
+    setMouseTransparent(false);
+    console.log('onmouseup', horizontalOrientation);
+    const grabCell = (horizontalOrientation
+      ? Math.floor(initMousePosWithinObject.x / 80)
+      : Math.floor(initMousePosWithinObject.y / 80));
+    console.log(grabCell, 'grabcell');
+    setShip(imgId, initialPosition, grabCell, horizontalOrientation);
   };
 
   function dragElement(elmnt) {
@@ -39,20 +53,6 @@ function Ship({
       dragEle.style.left = `${elmnt.offsetLeft - pos1}px`;
     }
 
-    function closeDragElement() {
-      /* stop moving when mouse button is released: */
-      window.removeEventListener('keyup', rotateShip);
-      document.onmouseup = null;
-      document.onmousemove = null;
-      setMouseTransparent(false);
-
-      const grabCell = (horizontalOrientation
-        ? Math.floor(initMousePosWithinObject.x / 80)
-        : Math.floor(initMousePosWithinObject.y / 80));
-      console.log(grabCell, 'grabcell');
-      setShip(imgId, initialPosition, grabCell, horizontalOrientation);
-    }
-
     function dragMouseDown(e) {
       initialPosition = e.target.getBoundingClientRect();
       setMouseTransparent(true);
@@ -63,11 +63,10 @@ function Ship({
       pos3 = e.clientX;
       pos4 = e.clientY;
 
-      initMousePosWithinObject = {
+      setInitMousePosWithinObject({
         x: e.clientX - initialPosition.left,
         y: e.clientY - initialPosition.top,
-      };
-
+      });
       document.onmouseup = closeDragElement;
       // call a function whenever the cursor moves:
       document.onmousemove = elementDrag;
@@ -77,10 +76,13 @@ function Ship({
     dragEle.onmousedown = dragMouseDown;
   }
   useEffect(() => {
-    console.log('dasdxxxxx');
+    console.log(horizontalOrientation, 'päivitys');
     ship = document.getElementById(imgId);
     dragElement(ship);
-  }, [horizontalOrientation]);
+    if (document.onmouseup !== null) {
+      document.onmouseup = closeDragElement;
+    }
+  }, [horizontalOrientation, initMousePosWithinObject]);
 
   return (
 

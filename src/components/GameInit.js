@@ -209,18 +209,19 @@ const GameInit = ({ setGameParameters }) => {
               </Grid>
 
             </Grid>
+            {submitError && <div className="error">{submitError}</div>}
+            <Button type="submit" disabled={submitting} variant="outlined">
+              Play
+            </Button>
+            <Button
+              onClick={form.reset}
+              disabled={submitting || pristine}
+              variant="outlined"
+            >
+              Reset
+            </Button>
           </Paper>
-          {submitError && <div className="error">{submitError}</div>}
-          <Button type="submit" disabled={submitting} variant="outlined">
-            Play
-          </Button>
-          <Button
-            onClick={form.reset}
-            disabled={submitting || pristine}
-            variant="outlined"
-          >
-            Reset
-          </Button>
+
         </form>
       )}
     />

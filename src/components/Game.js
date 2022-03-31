@@ -28,9 +28,9 @@ const Game = () => {
 
   const shipObjects = {
     carrier: { type: 'CARRIER', hitpoints: 5, coordinates: [] },
-    battleship: { type: 'BATTLESHIP', hitpoints: 2, coordinates: [] },
-    cruiser: { type: 'CRUISER', hitpoints: 2, coordinates: [] },
-    submarine: { type: 'SUBMARINE', hitpoints: 2, coordinates: [] },
+    battleship: { type: 'BATTLESHIP', hitpoints: 4, coordinates: [] },
+    cruiser: { type: 'CRUISER', hitpoints: 3, coordinates: [] },
+    submarine: { type: 'SUBMARINE', hitpoints: 3, coordinates: [] },
     destroyer: { type: 'DESTROYER', hitpoints: 2, coordinates: [] },
   };
 

@@ -4,21 +4,19 @@ function Ship({
   sprite, size, setShip, imgId,
 }) {
   const [mouseTransparent, setMouseTransparent] = useState(false);
+  const [horizontalOrientation, setHorizontalOrientation] = useState(true);
+
   let initialPosition;
   let ship = null;
   let initMousePosWithinObject = null;
-  let horizontalOrientation = true;
 
   const rotateShip = (es) => {
     if (es.key === 'r' || es.key === 'R') {
-      if (ship.style.transform === 'rotate(90deg)') {
-        horizontalOrientation = true;
-        ship.style.transform = 'rotate(360deg)';
+      if (!horizontalOrientation) {
+        setHorizontalOrientation(true);
       } else {
-        horizontalOrientation = false;
-        ship.style.transform = 'rotate(90deg)';
+        setHorizontalOrientation(false);
       }
-      // console.log(ship.getBoundingClientRect());
     }
   };
 
@@ -47,9 +45,11 @@ function Ship({
       document.onmouseup = null;
       document.onmousemove = null;
       setMouseTransparent(false);
-      // grabCell = floor(grab point / (ship.size.x /hitpointCount))
-      const grabCell = Math.floor(initMousePosWithinObject.x
-       / (160 / size));
+
+      const grabCell = (horizontalOrientation
+        ? Math.floor(initMousePosWithinObject.x / 80)
+        : Math.floor(initMousePosWithinObject.y / 80));
+      console.log(grabCell, 'grabcell');
       setShip(imgId, initialPosition, grabCell, horizontalOrientation);
     }
 
@@ -77,18 +77,22 @@ function Ship({
     dragEle.onmousedown = dragMouseDown;
   }
   useEffect(() => {
+    console.log('dasdxxxxx');
     ship = document.getElementById(imgId);
     dragElement(ship);
-  }, []);
+  }, [horizontalOrientation]);
 
   return (
 
     <img
       id={imgId}
-      src="images/arrow.svg"
+      src={(horizontalOrientation ? 'images/arrow.svg' : 'images/arrow2.svg')}
+      // src="images/arrow.svg"
       alt=""
-      width={80 * size}
-      height={80}
+      width={80 * (horizontalOrientation ? size : 1)}
+      height={80 * (horizontalOrientation ? 1 : size)}
+      // width={80 * size}
+      // height={80}
       style={{ position: 'absolute', pointerEvents: (mouseTransparent ? 'none' : 'auto') }}
     />
   );

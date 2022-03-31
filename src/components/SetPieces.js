@@ -56,18 +56,27 @@ function SetPieces({ info, shipsSet }) {
   const changeMovedObject = (shipId, initialPosition, objectGrabbedCell, horizontalOrientation) => {
     window.addEventListener('mouseup', (e) => {
       const draggable = document.getElementById(shipId);
-      const correctCell = document.getElementById(
-        (parseInt(e.target.id, 10) - objectGrabbedCell).toString(),
-      );
-
+      let correctCell = null;
+      if (horizontalOrientation) {
+        correctCell = document.getElementById(
+          (parseInt(e.target.id, 10) - objectGrabbedCell).toString(),
+        );
+      } else {
+        correctCell = document.getElementById(
+          (parseInt(e.target.id, 10) - objectGrabbedCell * x).toString(),
+        );
+      }
+      // console.log(correctCell.id, e.target.id);
       if (board.includes(correctCell?.id)
       && checkIfMoveIsLegal(ships[shipId].hitpoints, horizontalOrientation, correctCell)) {
-        // const correctCell = document.getElementById(
-        //   (parseInt(e.target.id, 10) - objectGrabbedCell).toString(),
-        // );
         const rect = correctCell.getBoundingClientRect();
+
         draggable.style.left = `${rect.x}px`;
         draggable.style.top = `${rect.y}px`;
+
+        // console.log(rect.x, rect.y, 'target rect');
+        // console.log(draggable.style.left, draggable.style.top, 'drag');
+
         const coordinateArray = [];
         for (let index = parseInt(e.target.id, 10) - objectGrabbedCell;
           index < parseInt(e.target.id, 10) - objectGrabbedCell + ships[shipId].hitpoints;
@@ -101,7 +110,13 @@ function SetPieces({ info, shipsSet }) {
         />
       ))}
 
-      <Grid item xs={12} id="grid">
+      <Grid
+        item
+        xs={12}
+        id="grid"
+        style={{
+        }}
+      >
 
         {Array(y).fill(0).map((column, columnIndex) => (
           <Grid container justifyContent="center" spacing={0} key={`${y + columnIndex} col`}>

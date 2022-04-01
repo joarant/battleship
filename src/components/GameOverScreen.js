@@ -8,8 +8,6 @@ import calculateHitpoints from '../utils/calculateHitpoints';
 const GameOverScreen = ({
   boards, info, fleets,
 }) => {
-  console.log(boards);
-
   const getWinner = () => {
     const h1 = calculateHitpoints(Object.values(fleets.p1Fleet));
     const h2 = calculateHitpoints(Object.values(fleets.p2Fleet));

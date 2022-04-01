@@ -6,8 +6,8 @@ function Ship({
   const [mouseTransparent, setMouseTransparent] = useState(false);
   const [horizontalOrientation, setHorizontalOrientation] = useState(true);
   const [initMousePosWithinObject, setInitMousePosWithinObject] = useState(null);
+  const [initialPosition, setInitialPosition] = useState(null);
 
-  let initialPosition;
   let ship = null;
 
   const rotateShip = (es) => {
@@ -52,7 +52,9 @@ function Ship({
     }
 
     function dragMouseDown(e) {
-      initialPosition = e.target.getBoundingClientRect();
+      const TempinitialPosition = e.target.getBoundingClientRect();
+      setInitialPosition(TempinitialPosition);
+
       setMouseTransparent(true);
       let eve = e;
       eve = e || window.event;
@@ -62,8 +64,8 @@ function Ship({
       pos4 = e.clientY;
 
       setInitMousePosWithinObject({
-        x: e.clientX - initialPosition.left,
-        y: e.clientY - initialPosition.top,
+        x: e.clientX - TempinitialPosition.left,
+        y: e.clientY - TempinitialPosition.top,
       });
       document.onmouseup = closeDragElement;
       // call a function whenever the cursor moves:

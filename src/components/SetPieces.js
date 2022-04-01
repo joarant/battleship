@@ -4,8 +4,6 @@ import {
 } from '@material-ui/core';
 import Ship from './Ship';
 
-// https://www.w3schools.com/howto/howto_js_draggable.asp
-// https://stackoverflow.com/questions/1009753/pass-mouse-events-through-absolutely-positione-elementd
 function SetPieces({ info, shipsSet, p1Turn }) {
   const board = [];
   const x = parseInt(info.x, 10);

@@ -41,7 +41,6 @@ const Game = () => {
     const shipKeys = ['carrier', 'battleship', 'cruiser', 'submarine', 'destroyer'];
     Object.keys(info).forEach((key) => {
       if (shipKeys.includes(key)) {
-        console.log('ss');
         for (let index = 0; index < info[key]; index += 1) {
           availableShips[(key + index)] = { ...shipObjects[key] };
         }

@@ -75,21 +75,15 @@ function SetPieces({ info, shipsSet }) {
 
         const coordinateArray = [];
         if (!horizontalOrientation) {
-          console.log('pysty');
+          // console.log('pysty');
           for (let index = 0; index < ships[shipId].hitpoints; index += 1) {
             coordinateArray.push((parseInt(correctCell.id, 10) + index * x).toString());
           }
         } else {
-          // for (let index = parseInt(e.target.id, 10) - objectGrabbedCell;
-          //   index < parseInt(e.target.id, 10) - objectGrabbedCell + ships[shipId].hitpoints;
-          //   index += 1) {
-          //   coordinateArray.push(index.toString());
-          // }
           for (let index = 0; index < ships[shipId].hitpoints; index += 1) {
             coordinateArray.push((parseInt(correctCell.id, 10) + index).toString());
           }
         }
-        console.log(coordinateArray);
         addInfoToBoardObject({ ...ships[shipId], ...{ coordinates: coordinateArray } }, shipId);
       } else {
         draggable.style.left = `${initialPosition.x}px`;
@@ -129,7 +123,6 @@ function SetPieces({ info, shipsSet }) {
           <Grid container justifyContent="center" spacing={0} key={`${y + columnIndex} col`}>
             {Array(x).fill(0).map((cell, index) => (
               <Grid key={board[y * columnIndex + index]} item justifyContent="center">
-                {/* {console.log(index * columnIndex + index)} */}
                 <Paper
                   id={board[y * columnIndex + index]}
                   sx={{

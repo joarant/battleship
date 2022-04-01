@@ -18,6 +18,7 @@ const Game = () => {
     },
   });
   const [boards, setBoards] = useState({ p1Board: {}, p2Board: {} });
+  const [hitpoints, setHitpoints] = useState({ p1: 0, p2: 0 });
 
   const [initInfo, setInitInfo] = useState();
   const [p1ShipsSet, setP1ShipsSet] = useState(false);
@@ -58,10 +59,7 @@ const Game = () => {
     setGameOver(true);
   };
 
-  const hitpointsP1 = calculateHitpoints(Object.values(ships.p1Fleet));
-  const hitpointsP2 = calculateHitpoints(Object.values(ships.p2Fleet));
-
-  if ((hitpointsP1 === 0 || hitpointsP2 === 0) && !gameOver && (p1ShipsSet && p2ShipsSet)) {
+  if ((hitpoints.p1 === 0 || hitpoints.p2 === 0) && !gameOver && (p1ShipsSet && p2ShipsSet)) {
     setGameDone();
   }
 
@@ -69,21 +67,26 @@ const Game = () => {
     setP1Turn(!p1Turn);
     setReadyCheckDone(false);
   };
-
+  console.log(boards);
   const updateStatus = (board, ship) => {
     const tempBoards = boards;
     tempBoards[(p1Turn ? 'p1Board' : 'p2Board')] = board;
     if (ship != null) {
       const tempShips = ships;
-      console.log('dasx');
       tempShips[(p1Turn ? 'p2Fleet' : 'p1Fleet')][ship].hitpoints -= 1;
       setShips(tempShips);
+      setHitpoints({
+        p1: calculateHitpoints(Object.values(tempShips.p1Fleet)),
+        p2: calculateHitpoints(Object.values(tempShips.p2Fleet)),
+      });
+
       if (tempShips[(p1Turn ? 'p2Fleet' : 'p1Fleet')][ship].hitpoints === 0) {
         switchTurns();
       }
     } else {
       switchTurns();
     }
+    console.log('up boards');
     setBoards(tempBoards);
   };
 
@@ -99,6 +102,10 @@ const Game = () => {
       setP2ShipsSet(true);
     }
     setShips(tempShips);
+    setHitpoints({
+      p1: calculateHitpoints(Object.values(tempShips.p1Fleet)),
+      p2: calculateHitpoints(Object.values(tempShips.p2Fleet)),
+    });
   };
 
   return (

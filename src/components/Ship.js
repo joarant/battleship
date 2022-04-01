@@ -26,11 +26,9 @@ function Ship({
     document.onmouseup = null;
     document.onmousemove = null;
     setMouseTransparent(false);
-    console.log('onmouseup', horizontalOrientation);
     const grabCell = (horizontalOrientation
       ? Math.floor(initMousePosWithinObject.x / 80)
       : Math.floor(initMousePosWithinObject.y / 80));
-    console.log(grabCell, 'grabcell');
     setShip(imgId, initialPosition, grabCell, horizontalOrientation);
   };
 
@@ -76,7 +74,6 @@ function Ship({
     dragEle.onmousedown = dragMouseDown;
   }
   useEffect(() => {
-    console.log(horizontalOrientation, 'päivitys');
     ship = document.getElementById(imgId);
     dragElement(ship);
     if (document.onmouseup !== null) {

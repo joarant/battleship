@@ -7,9 +7,7 @@ import calculateHitpoints from '../utils/calculateHitpoints';
 const GameStatus = ({
   fleets, gameOverFunc, info,
 }) => {
-  const hitpointsP1 = calculateHitpoints(Object.values(fleets.p1Fleet));
-  const hitpointsP2 = calculateHitpoints(Object.values(fleets.p2Fleet));
-
+  console.log('status');
   return (
     <Box style={{
       display: 'flex', justifyContent: 'flex-end',

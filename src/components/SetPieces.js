@@ -1,12 +1,12 @@
 import React, { useEffect, useState } from 'react';
 import {
-  Grid, Paper, Button,
+  Grid, Paper, Button, Typography,
 } from '@material-ui/core';
 import Ship from './Ship';
 
 // https://www.w3schools.com/howto/howto_js_draggable.asp
 // https://stackoverflow.com/questions/1009753/pass-mouse-events-through-absolutely-positione-elementd
-function SetPieces({ info, shipsSet }) {
+function SetPieces({ info, shipsSet, p1Turn }) {
   const board = [];
   const x = parseInt(info.x, 10);
   const y = parseInt(info.y, 10);
@@ -118,7 +118,10 @@ function SetPieces({ info, shipsSet }) {
         style={{
         }}
       >
+        <Typography variant="h5">
+          {`${(p1Turn ? info.player1 : info.player2)} set your fleet`}
 
+        </Typography>
         {Array(y).fill(0).map((column, columnIndex) => (
           <Grid container justifyContent="center" spacing={0} key={`${y + columnIndex} col`}>
             {Array(x).fill(0).map((cell, index) => (

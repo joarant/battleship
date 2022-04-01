@@ -111,8 +111,11 @@ const Game = () => {
   return (
     <>
       {!initInfo && !p1ShipsSet && !p2ShipsSet && (<GameInit setGameParameters={setInfo} />)}
-      {initInfo && !p1ShipsSet && (<SetPieces info={initInfo} shipsSet={setFleet} />)}
-      {initInfo && !p2ShipsSet && p1ShipsSet && (<SetPieces info={initInfo} shipsSet={setFleet} />)}
+
+      {initInfo && !p1ShipsSet && (
+      <SetPieces info={initInfo} shipsSet={setFleet} p1Turn />)}
+      {initInfo && !p2ShipsSet && p1ShipsSet && (
+      <SetPieces info={initInfo} shipsSet={setFleet} p1Turn={false} />)}
 
       {p1ShipsSet && p2ShipsSet && !gameOver && p1Turn && !ReadyCheckDone
       && (
@@ -121,6 +124,7 @@ const Game = () => {
         boards={boards}
         info={initInfo}
         p1Turn={p1Turn}
+        fleets={ships}
       />
       )}
 
@@ -144,7 +148,7 @@ const Game = () => {
         boards={boards}
         info={initInfo}
         p1Turn={p1Turn}
-
+        fleets={ships}
       />
       )}
 

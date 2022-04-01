@@ -41,6 +41,8 @@ function Play({
                 setReady={updateBoard}
                 isDisabled={tempBoard[measurements.x * rowIndex + index].hit}
                 ship={tempBoard[measurements.x * rowIndex + index].ship}
+                fleet={ships}
+                shipId={tempBoard[measurements.x * rowIndex + index].shipId}
               />
             </Grid>
           ))}

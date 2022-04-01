@@ -5,7 +5,7 @@ import {
 } from '@material-ui/core';
 
 const BoardStatus = ({
-  measurements, fleet, board, boardOwner, showShipPositions,
+  measurements, fleet, board, opponentName, showShipPositions,
 }) => {
   const getColor = (cellStatus) => {
     if (cellStatus) {
@@ -13,7 +13,10 @@ const BoardStatus = ({
         return 'green';
       }
       if (cellStatus.ship && cellStatus.hit) {
-        return 'red';
+        if (fleet[cellStatus.shipId].hitpoints === 0) {
+          return 'black';
+        }
+        return 'darkred';
       }
       if (!cellStatus.ship && cellStatus.hit) {
         console.log('grey');
@@ -30,8 +33,7 @@ const BoardStatus = ({
       {board && (
       <>
         <Typography>
-          {`${boardOwner} 
-         \n current board`}
+          {`damage done to ${opponentName}̈́'s fleet`}
         </Typography>
         <Grid item xs={12}>
           {Array(measurements.y).fill(0).map((row, rowIndex) => (

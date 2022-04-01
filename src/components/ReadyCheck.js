@@ -5,7 +5,7 @@ import {
 import BoardStatus from './BoardStatus';
 
 const ReadyCheck = ({
-  setReady, boards, info, p1Turn,
+  setReady, boards, info, p1Turn, fleets,
 }) => {
   console.log(boards);
 
@@ -34,16 +34,18 @@ const ReadyCheck = ({
           <Grid item>
             <BoardStatus
               board={boards?.p1Board}
-              boardOwner={info.player1}
+              opponentName={info.player2}
               measurements={{ x: parseInt(info.x, 10), y: parseInt(info.y, 10) }}
+              fleet={fleets.p1Fleet}
             />
           </Grid>
           <Grid item>
 
             <BoardStatus
               board={boards?.p2Board}
-              boardOwner={info.player2}
+              opponentName={info.player1}
               measurements={{ x: parseInt(info.x, 10), y: parseInt(info.y, 10) }}
+              fleet={fleets.p2Fleet}
             />
           </Grid>
 

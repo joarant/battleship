@@ -1,29 +1,69 @@
 import React, { useEffect, useState } from 'react';
-import { Button, Box, Typography } from '@material-ui/core';
-import GameInit from './GameInit';
+import {
+  Button, Box, Typography, Grid,
+} from '@material-ui/core';
+import BoardStatus from './BoardStatus';
 
-const ReadyCheck = ({ text, setReady }) => (
-  <Box
-    justifyContent="center"
-    style={{
-      margin: '0',
-      position: 'absolute',
-      top: '50%',
-      left: '50%',
-      MSTransform: 'translate(-50%, -50%)',
-      transform: 'translate(-50%, -50%)',
-    }}
-    sx={{
-      width: 300,
-      height: 300,
+const ReadyCheck = ({
+  setReady, boards, info, p1Turn,
+}) => {
+  console.log(boards);
 
-    }}
-  >
-    <Typography variant="subtitle1" gutterBottom component="div">
-      {text}
-    </Typography>
-    <Button onClick={() => setReady(true)}>Ready</Button>
-  </Box>
-);
+  return (
+    <Box
+      style={{
+        display: 'flex',
+        justifyContent: 'center',
+        alignItems: 'center',
+
+      }}
+    >
+      <Box style={{
+        // width: '50px',
+        // height: '50px',
+        top: '5%',
+        position: 'absolute',
+        margiTop: '50px',
+      }}
+      >
+        <Grid
+          container
+          spacing={5}
+
+        >
+          <Grid item>
+            <BoardStatus
+              board={boards?.p1Board}
+              boardOwner={info.player1}
+              measurements={{ x: parseInt(info.x, 10), y: parseInt(info.y, 10) }}
+            />
+          </Grid>
+          <Grid item>
+
+            <BoardStatus
+              board={boards?.p2Board}
+              boardOwner={info.player2}
+              measurements={{ x: parseInt(info.x, 10), y: parseInt(info.y, 10) }}
+            />
+          </Grid>
+
+        </Grid>
+
+        <Box
+          style={{
+            padding: '15px',
+          }}
+        >
+          <Typography variant="subtitle1" gutterBottom component="div">
+            {`${(p1Turn ? info.player1 : info.player2)} get ready`}
+          </Typography>
+          <Button onClick={() => setReady(true)}>Ready</Button>
+        </Box>
+      </Box>
+
+    </Box>
+
+  );
+};
 
 export default ReadyCheck;

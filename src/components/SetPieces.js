@@ -129,7 +129,7 @@ function SetPieces({ info, shipsSet }) {
                     height: 80,
                     width: 80,
                     // opacity: 0.5,
-                    backgroundColor: (theme) => ('#ffffff'),
+                    backgroundColor: 'white',
                   }}
                   style={{ alignContent: 'center' }}
                   variant="outlined"

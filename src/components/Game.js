@@ -6,6 +6,7 @@ import Play from './Play';
 import ReadyCheck from './ReadyCheck';
 import GameStatus from './GameStatusScreen';
 import calculateHitpoints from '../utils/calculateHitpoints';
+import GameOverScreen from './GameOverScreen';
 
 const Game = () => {
   // id :{hit:false, ship: false}
@@ -165,7 +166,13 @@ const Game = () => {
       </>
       )}
 
-      {gameOver}
+      {gameOver && (
+      <GameOverScreen
+        boards={boards}
+        info={initInfo}
+        fleets={ships}
+      />
+      )}
 
     </>
   );

@@ -27,8 +27,8 @@ function Ship({
     document.onmousemove = null;
     setMouseTransparent(false);
     const grabCell = (horizontalOrientation
-      ? Math.floor(initMousePosWithinObject.x / 80)
-      : Math.floor(initMousePosWithinObject.y / 80));
+      ? Math.floor(initMousePosWithinObject.x / 60)
+      : Math.floor(initMousePosWithinObject.y / 60));
     setShip(imgId, initialPosition, grabCell, horizontalOrientation);
   };
 
@@ -90,10 +90,10 @@ function Ship({
       src={(horizontalOrientation ? 'images/arrow.svg' : 'images/arrow2.svg')}
       // src="images/arrow.svg"
       alt=""
-      width={80 * (horizontalOrientation ? size : 1)}
-      height={80 * (horizontalOrientation ? 1 : size)}
-      // width={80 * size}
-      // height={80}
+      width={60 * (horizontalOrientation ? size : 1)}
+      height={60 * (horizontalOrientation ? 1 : size)}
+      // width={60 * size}
+      // height={60}
       style={{ position: 'absolute', pointerEvents: (mouseTransparent ? 'none' : 'auto') }}
     />
   );

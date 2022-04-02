@@ -29,11 +29,21 @@ const Game = () => {
   const [ReadyCheckDone, setReadyCheckDone] = useState(false);
 
   const shipObjects = {
-    carrier: { type: 'CARRIER', hitpoints: 5, coordinates: [] },
-    battleship: { type: 'BATTLESHIP', hitpoints: 4, coordinates: [] },
-    cruiser: { type: 'CRUISER', hitpoints: 3, coordinates: [] },
-    submarine: { type: 'SUBMARINE', hitpoints: 3, coordinates: [] },
-    destroyer: { type: 'DESTROYER', hitpoints: 2, coordinates: [] },
+    carrier: {
+      type: 'CARRIER', size: 5, hitpoints: 0, coordinates: [],
+    },
+    battleship: {
+      type: 'BATTLESHIP', size: 4, hitpoints: 0, coordinates: [],
+    },
+    cruiser: {
+      type: 'CRUISER', size: 3, hitpoints: 0, coordinates: [],
+    },
+    submarine: {
+      type: 'SUBMARINE', size: 3, hitpoints: 0, coordinates: [],
+    },
+    destroyer: {
+      type: 'DESTROYER', size: 2, hitpoints: 0, coordinates: [],
+    },
   };
 
   const setInfo = (info) => {

@@ -1,18 +1,11 @@
 import React, { useEffect, useState } from 'react';
 import { Button, Box, Typography } from '@material-ui/core';
+import calculateHitpoints from '../utils/calculateHitpoints';
 
 const GameStatus = ({
   fleets, gameOverFunc,
 }) => {
   const [disabled, setDisabled] = useState();
-
-  const calculateHitpoints = (fleet) => {
-    let hitpoints = 0;
-    fleet.forEach((ship) => {
-      hitpoints += ship.hitpoints;
-    });
-    return hitpoints;
-  };
 
   const hitpointsP1 = calculateHitpoints(Object.values(fleets.p1Fleet));
   const hitpointsP2 = calculateHitpoints(Object.values(fleets.p2Fleet));

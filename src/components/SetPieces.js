@@ -10,12 +10,11 @@ function SetPieces({ info, shipsSet, p1Turn }) {
   const y = parseInt(info.y, 10);
 
   // ship
-  // id: { type: '', hitpoints: null, coordinates: [] };
+  // id: { type: '', hitpoints: null, size: null, coordinates: [] };
   const ships = { ...info.availableShips };
 
   const addInfoToBoardObject = (newObject, shipId) => {
     ships[shipId] = newObject;
-    // console.log(ships);
   };
 
   const checkIfMoveIsLegal = (shipSize, shipOrientation, targetCell) => {
@@ -65,7 +64,7 @@ function SetPieces({ info, shipsSet, p1Turn }) {
       }
       // console.log(correctCell.id, e.target.id);
       if (board.includes(correctCell?.id)
-      && checkIfMoveIsLegal(ships[shipId].hitpoints, horizontalOrientation, correctCell)) {
+      && checkIfMoveIsLegal(ships[shipId].size, horizontalOrientation, correctCell)) {
         const rect = correctCell.getBoundingClientRect();
 
         draggable.style.left = `${rect.x}px`;
@@ -74,15 +73,21 @@ function SetPieces({ info, shipsSet, p1Turn }) {
         const coordinateArray = [];
         if (!horizontalOrientation) {
           // console.log('pysty');
-          for (let index = 0; index < ships[shipId].hitpoints; index += 1) {
+          for (let index = 0; index < ships[shipId].size; index += 1) {
             coordinateArray.push((parseInt(correctCell.id, 10) + index * x).toString());
           }
         } else {
-          for (let index = 0; index < ships[shipId].hitpoints; index += 1) {
+          for (let index = 0; index < ships[shipId].size; index += 1) {
             coordinateArray.push((parseInt(correctCell.id, 10) + index).toString());
           }
         }
-        addInfoToBoardObject({ ...ships[shipId], ...{ coordinates: coordinateArray } }, shipId);
+        addInfoToBoardObject({
+          ...ships[shipId],
+          ...{
+            coordinates: coordinateArray,
+            hitpoints: coordinateArray.length,
+          },
+        }, shipId);
       } else {
         draggable.style.left = `${initialPosition.x}px`;
         draggable.style.top = `${initialPosition.y}px`;
@@ -98,13 +103,11 @@ function SetPieces({ info, shipsSet, p1Turn }) {
 
   return (
     <>
-      {/* <Ship imgId="id1" setShip={changeMovedObject} size={2} />
-      <Ship imgId="id2" setShip={changeMovedObject} size={2} /> */}
       {Object.keys(ships).map((ship) => (
         <Ship
           imgId={ship}
           setShip={changeMovedObject}
-          size={ships[ship].hitpoints}
+          size={ships[ship].size}
           key={ship}
         />
       ))}
@@ -127,8 +130,8 @@ function SetPieces({ info, shipsSet, p1Turn }) {
                 <Paper
                   id={board[y * columnIndex + index]}
                   sx={{
-                    height: 80,
-                    width: 80,
+                    height: 60,
+                    width: 60,
                     // opacity: 0.5,
                     backgroundColor: 'white',
                   }}

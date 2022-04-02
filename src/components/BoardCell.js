@@ -22,8 +22,8 @@ const BoardCell = ({
   return (
     <Button
       sx={{
-        height: 80,
-        width: 80,
+        height: 60,
+        width: 60,
       }}
       style={{ backgroundColor: getColor() }}
       variant="contained"

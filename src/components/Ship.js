@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState, useRef } from 'react';
 
 /**
  * Alusta kuvastava elementti
@@ -13,13 +13,30 @@ function Ship({
   const [initMousePosWithinObject, setInitMousePosWithinObject] = useState(null);
   const [initialPosition, setInitialPosition] = useState(null);
 
+  const transparent = useRef(mouseTransparent);
+  const position = useRef(initialPosition);
+  const mousePosition = useRef(initMousePosWithinObject);
+  const orientation = useRef(horizontalOrientation);
+
+  const inputEl = useRef(null);
   let ship = null;
 
   const rotateShip = (es) => {
-    if (es.key === 'r' || es.key === 'R') {
-      if (!horizontalOrientation) {
+    console.log(transparent.current);
+    if ((es.key === 'r' || es.key === 'R') && transparent.current) {
+      console.log('tapahtuma');
+
+      if (!orientation.current) {
+        orientation.current = true;
+        ship.style.transform = 'rotate(360deg)';
+        console.log(inputEl.current.style.left);
+        console.log(inputEl.current.style.top);
         setHorizontalOrientation(true);
       } else {
+        orientation.current = false;
+        ship.style.transform = 'rotate(90deg)';
+        console.log(inputEl.current.transform);
+        console.log(inputEl.current.style.top);
         setHorizontalOrientation(false);
       }
     }
@@ -27,14 +44,17 @@ function Ship({
 
   const closeDragElement = () => {
     /* stop moving when mouse button is released: */
-    window.removeEventListener('keyup', rotateShip);
+    // window.removeEventListener('keyup', rotateShip);
     document.onmouseup = null;
     document.onmousemove = null;
+    document.onkeydown = null;
+
+    transparent.current = false;
     setMouseTransparent(false);
-    const grabCell = (horizontalOrientation
-      ? Math.floor(initMousePosWithinObject.x / 60)
-      : Math.floor(initMousePosWithinObject.y / 60));
-    setShip(imgId, initialPosition, grabCell, horizontalOrientation);
+    const grabCell = (orientation.current
+      ? Math.floor(mousePosition.current.x / 60)
+      : Math.floor(mousePosition.current.y / 60));
+    setShip(imgId, position.current, grabCell, orientation.current);
   };
 
   function dragElement(elmnt) {
@@ -58,16 +78,20 @@ function Ship({
 
     function dragMouseDown(e) {
       const TempinitialPosition = e.target.getBoundingClientRect();
+      position.current = TempinitialPosition;
       setInitialPosition(TempinitialPosition);
-
+      transparent.current = true;
       setMouseTransparent(true);
-      // let eve = e;
-      // eve = e || window.event;
+
       e.preventDefault();
       // get the mouse cursor position at startup:
       pos3 = e.clientX;
       pos4 = e.clientY;
 
+      mousePosition.current = {
+        x: e.clientX - TempinitialPosition.left,
+        y: e.clientY - TempinitialPosition.top,
+      };
       setInitMousePosWithinObject({
         x: e.clientX - TempinitialPosition.left,
         y: e.clientY - TempinitialPosition.top,
@@ -75,35 +99,35 @@ function Ship({
       document.onmouseup = closeDragElement;
       // call a function whenever the cursor moves:
       document.onmousemove = elementDrag;
-      window.addEventListener('keyup', rotateShip);
+      document.onkeydown = rotateShip;
     }
 
     dragEle.onmousedown = dragMouseDown;
   }
-  // suorittaa, kun elementit renderöity tai jos komponentin tietyt tilat muuttuvat
+  // suorittaa, kun elementit html elementit ovat olemassa
   useEffect(() => {
     ship = document.getElementById(imgId);
+    ship.style.cursor = 'move';
     dragElement(ship);
-    // Jotkut funktiot ovat sidottuina käyttäjän antamiin inputteihin.
-    // Sidotut funktiot säilyttävät vanhaa tietoa komponentin tilasta.
-    // Tällä on tarkoitus päivittää funktiossa olevat tiedot.
-    if (document.onmouseup !== null) {
-      document.onmouseup = closeDragElement;
-    }
-  }, [horizontalOrientation, initMousePosWithinObject]);
+  }, []);
 
   return (
 
     <img
       id={imgId}
-      src={(horizontalOrientation ? 'images/arrow.svg' : 'images/arrow2.svg')}
-      // src="images/arrow.svg"
+      // src={(horizontalOrientation ? 'images/arrow.svg' : 'images/arrow2.svg')}
+      src="images/arrow.svg"
       alt=""
-      width={60 * (horizontalOrientation ? size : 1)}
-      height={60 * (horizontalOrientation ? 1 : size)}
-      // width={60 * size}
-      // height={60}
-      style={{ position: 'absolute', pointerEvents: (mouseTransparent ? 'none' : 'auto') }}
+      ref={inputEl}
+      // width={60 * (horizontalOrientation ? size : 1)}
+      // height={60 * (horizontalOrientation ? 1 : size)}
+      width={60 * size}
+      height={60}
+      style={{
+        position: (mouseTransparent ? 'absolute' : 'relative'),
+        pointerEvents: (mouseTransparent ? 'none' : 'auto'),
+        left: (mouseTransparent ? 'auto' : '0px'),
+      }}
     />
   );
 }

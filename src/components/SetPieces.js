@@ -1,13 +1,11 @@
 import React, { useEffect, useState } from 'react';
 import {
-  Grid, Paper, Button, Typography,
+  Grid, Paper, Button, Typography, Box,
 } from '@material-ui/core';
 import Ship from './Ship';
 
 /**
  * Piirtää ruudukon johon pelaajat asettelevat aluksensa
- *
- *
  */
 
 function SetPieces({ info, shipsSet, p1Turn }) {
@@ -31,9 +29,12 @@ function SetPieces({ info, shipsSet, p1Turn }) {
       for (let index = 0; index < shipSize; index += 1) {
         const nextCell = document.getElementById(parseInt(targetCell.id, 10) + index);
         if (nextCell === null) {
+          console.log('laiton');
           return false;
         }
         if (!(Math.floor(parseInt(nextCell.id, 10) / x) === refrenceNum)) {
+          console.log('laiton');
+
           return false;
         }
       }
@@ -42,10 +43,14 @@ function SetPieces({ info, shipsSet, p1Turn }) {
       for (let index = 0; index < shipSize; index += 1) {
         const nextCell = document.getElementById(parseInt(targetCell.id, 10) + index * x);
         if (nextCell === null) {
+          console.log('laiton');
+
           return false;
         }
 
         if (!(parseInt(nextCell.id, 10) % x === refrenceNum)) {
+          console.log('laiton');
+
           return false;
         }
       }
@@ -108,48 +113,82 @@ function SetPieces({ info, shipsSet, p1Turn }) {
     <>
 
       <Grid
-        item
-        xs={12}
+        container
+        spacing={2}
+        rowSpacing={5}
+        direction="column"
         id="grid"
         style={{
         }}
       >
 
-        {Object.keys(ships).map((ship) => (
-          <Ship
-            imgId={ship}
-            setShip={changeMovedObject}
-            size={ships[ship].size}
-            key={ship}
-          />
-        ))}
+        <Grid item>
+          <Typography variant="h5" style={{ padding: '5px' }}>
+            {`${(p1Turn ? info.player1 : info.player2)} aseta laivastosi`}
 
-        <Typography variant="h5">
-          {`${(p1Turn ? info.player1 : info.player2)} set your fleet`}
+          </Typography>
 
-        </Typography>
-        {Array(y).fill(0).map((column, columnIndex) => (
-          <Grid container justifyContent="center" spacing={0} key={`${y + columnIndex} col`}>
-            {Array(x).fill(0).map((cell, index) => (
-              <Grid key={board[y * columnIndex + index]} item justifyContent="center">
-                <Paper
-                  id={board[y * columnIndex + index]}
-                  sx={{
-                    height: 60,
-                    width: 60,
-                    // opacity: 0.5,
-                    backgroundColor: 'white',
-                  }}
-                  style={{ alignContent: 'center' }}
-                  variant="outlined"
-                />
+          <Typography variant="subtitle1" style={{ padding: '5px' }}>
+            käännä alusta painamalla r
+          </Typography>
+        </Grid>
+        <Grid
+          container
+        >
+          <Paper
+            variant="outlined"
+            style={{
+              marginLeft: '32.75%',
+
+              // marginRight: 'auto',
+
+            }}
+          >
+            {Array(y).fill(0).map((column, columnIndex) => (
+              <Grid container justifyContent="center" spacing={0} key={`${y + columnIndex} col`}>
+                {Array(x).fill(0).map((cell, index) => (
+                  <Grid key={board[y * columnIndex + index]} item justifyContent="center">
+                    <Paper
+                      id={board[y * columnIndex + index]}
+                      sx={{
+                        height: 60,
+                        width: 60,
+                        backgroundColor: 'white',
+                      }}
+                      style={{ alignContent: 'center' }}
+                      variant="outlined"
+                    />
+                  </Grid>
+                ))}
               </Grid>
             ))}
-          </Grid>
-        ))}
-      </Grid>
+          </Paper>
+          <Paper>
 
-      <Button onClick={() => shipsSet(ships)} variant="outlined"> Done </Button>
+            {Object.keys(ships).map((ship) => (
+              <Grid key={ship}>
+                <Paper sx={{
+                  height: 60,
+                  width: 300,
+                  backgroundColor: 'white',
+                }}
+                >
+                  <Ship
+                    imgId={ship}
+                    setShip={changeMovedObject}
+                    size={ships[ship].size}
+                  />
+                </Paper>
+              </Grid>
+
+            ))}
+          </Paper>
+
+        </Grid>
+
+      </Grid>
+      <Button onClick={() => shipsSet(ships)} variant="outlined"> Valmis </Button>
+
     </>
   );
 }

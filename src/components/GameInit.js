@@ -1,7 +1,7 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { Form, Field } from 'react-final-form';
 import {
-  TextField, Paper, Button, Grid, Typography,
+  TextField, Paper, Button, Grid, Typography, Box,
 } from '@material-ui/core';
 
 /**
@@ -11,6 +11,8 @@ import {
  *
  */
 const GameInit = ({ setGameParameters }) => {
+  const [minSize, setMinSize] = useState(0);
+
   const onSubmit = async (values) => {
     setGameParameters(values);
   };
@@ -25,19 +27,17 @@ const GameInit = ({ setGameParameters }) => {
       onSubmit={onSubmit}
       validate={(values) => {
         const errors = {};
-        let minSize = 0;
-        let minSideSize = 2;
+        let tmpMinSize = 0;
 
         Object.keys(shipFields).forEach((element) => {
-          minSize += (values[element] ? shipFields[element] * parseInt(values[element], 10) : 0);
-          minSideSize = (minSideSize < shipFields[element] ? minSideSize : shipFields[element]);
+          tmpMinSize += (values[element] ? shipFields[element] * parseInt(values[element], 10) : 0);
           if (values[element] && !(parseInt(values[element], 10) >= 0)) {
             errors[element] = 'Required';
           }
         });
 
         Object.keys(shipFields).forEach((element) => {
-          if (minSize <= 0) {
+          if (tmpMinSize <= 0) {
             errors[element] = 'Required';
           }
         });
@@ -46,8 +46,8 @@ const GameInit = ({ setGameParameters }) => {
           if (!values[element]
              || parseInt(values[gridSizeFields[0]], 10)
              * parseInt(values[gridSizeFields[1]], 10) < minSize
-             || (parseInt(gridSizeFields[0], 10) < minSideSize
-             && parseInt(gridSizeFields[1], 10) < minSideSize)) {
+             || (parseInt(gridSizeFields[0], 10) < 5
+             && parseInt(gridSizeFields[1], 10) < 5)) {
             errors[element] = 'Required';
           }
         });
@@ -57,7 +57,10 @@ const GameInit = ({ setGameParameters }) => {
             errors[element] = 'Required';
           }
         });
-
+        console.log(tmpMinSize);
+        if (tmpMinSize !== minSize) {
+          setMinSize(tmpMinSize);
+        }
         return errors;
       }}
       render={({
@@ -72,13 +75,14 @@ const GameInit = ({ setGameParameters }) => {
         <form onSubmit={handleSubmit}>
           <Paper
             style={{
-              alignContent: 'center', padding: 15, flexWrap: 'nowrap', display: 'inline-block',
+              alignContent: 'center', flexWrap: 'nowrap', display: 'inline-block',
             }}
             variant="outlined"
           >
-            <Typography variant="h3"> Laivanupotus </Typography>
-            <Typography variant="subtitle"> Asetukset </Typography>
-
+            <Box style={{ padding: '15px' }}>
+              <Typography variant="h3"> Laivanupotus </Typography>
+              <Typography variant="subtitle"> Asetukset </Typography>
+            </Box>
             <Grid style={{ }} container spacing={2} rowSpacing={5} direction="column">
               <Grid item>
                 <Field name="player1">
@@ -108,81 +112,107 @@ const GameInit = ({ setGameParameters }) => {
 
               <Grid item>
 
-                <Paper>
-                  <Typography style={{
-                    float: 'left',
-                  }}
-                  >
-                    Laivasto
-                  </Typography>
+                <Box style={{ padding: '15px' }}>
 
-                  <Field name="carrier">
-                    {({ input, meta }) => (
-                      <TextField
-                        label="Lentotukialus määrä"
-                        placeholder="1"
-                        helperText="koko: 5"
-                        onChange={(v) => input.onChange(v)}
-                        error={(meta.error && meta.touched) || meta.submitError}
-                      />
+                  <Grid container rowSpacing={5} direction="column">
+                    <Typography style={{
+                      float: 'left',
+                    }}
+                    >
+                      Laivasto
+                    </Typography>
+                    <Grid>
 
-                    )}
-                  </Field>
+                      <Field name="carrier">
+                        {({ input, meta }) => (
+                          <TextField
+                            label="Lentotukialukset"
+                            placeholder="1"
+                            helperText="koko: 5"
+                            onChange={(v) => input.onChange(v)}
+                            error={(meta.error && meta.touched) || meta.submitError}
+                          />
 
-                  <Field name="battleship">
-                    {({ input, meta }) => (
-                      <TextField
-                        label="taistelulaiva määrä"
-                        placeholder="2"
-                        helperText="koko: 4"
-                        onChange={(v) => input.onChange(v)}
-                        error={(meta.error && meta.touched) || meta.submitError}
-                      />
-                    )}
-                  </Field>
+                        )}
+                      </Field>
 
-                  <Field name="cruiser">
-                    {({ input, meta }) => (
-                      <TextField
-                        label="risteilijä määrä"
-                        placeholder="3"
-                        helperText="koko: 3"
-                        onChange={(v) => input.onChange(v)}
-                        error={(meta.error && meta.touched) || meta.submitError}
-                      />
+                      <Field name="battleship">
+                        {({ input, meta }) => (
+                          <TextField
+                            label="taistelulaivat"
+                            placeholder="2"
+                            helperText="koko: 4"
+                            onChange={(v) => input.onChange(v)}
+                            error={(meta.error && meta.touched) || meta.submitError}
+                          />
+                        )}
+                      </Field>
+                    </Grid>
+                    <Grid>
 
-                    )}
-                  </Field>
+                      <Field name="cruiser">
+                        {({ input, meta }) => (
+                          <TextField
+                            label="risteilijät"
+                            placeholder="3"
+                            helperText="koko: 3"
+                            onChange={(v) => input.onChange(v)}
+                            error={(meta.error && meta.touched) || meta.submitError}
+                          />
 
-                  <Field name="submarine">
-                    {({ input, meta }) => (
-                      <TextField
-                        label="sukellusvene määrä"
-                        placeholder="4"
-                        helperText="koko: 3"
-                        onChange={(v) => input.onChange(v)}
-                        error={(meta.error && meta.touched) || meta.submitError}
-                      />
+                        )}
+                      </Field>
 
-                    )}
-                  </Field>
+                      <Field name="submarine">
+                        {({ input, meta }) => (
+                          <TextField
+                            label="sukellusveneet"
+                            placeholder="4"
+                            helperText="koko: 3"
+                            onChange={(v) => input.onChange(v)}
+                            error={(meta.error && meta.touched) || meta.submitError}
+                          />
 
-                  <Field name="destroyer">
-                    {({ input, meta }) => (
-                      <TextField
-                        label="hävittäjä määrä"
-                        placeholder="5"
-                        helperText="koko: 2"
-                        onChange={(v) => input.onChange(v)}
-                        error={(meta.error && meta.touched) || meta.submitError}
-                      />
+                        )}
+                      </Field>
+                    </Grid>
 
-                    )}
-                  </Field>
-                </Paper>
+                    <Grid>
+
+                      <Field name="destroyer">
+                        {({ input, meta }) => (
+                          <TextField
+                            label="hävittäjät"
+                            placeholder="5"
+                            helperText="koko: 2"
+                            onChange={(v) => input.onChange(v)}
+                            error={(meta.error && meta.touched) || meta.submitError}
+                          />
+
+                        )}
+                      </Field>
+                    </Grid>
+
+                  </Grid>
+                </Box>
               </Grid>
+              <Box style={{ padding: '15px' }}>
 
-              <Grid item>
+                <Typography variant="subtitle" style={{ float: 'left', marginLeft: '10px' }}>
+                  Ruudukon koko
+                </Typography>
+                <br />
+
+                <Typography variant="subtitle2" style={{ float: 'left', marginLeft: '10px' }}>
+                  {`Ruudukon min  koko: ${minSize}`}
+                </Typography>
+
+                <Typography variant="subtitle2" style={{ float: 'left', marginLeft: '10px' }}>
+                  Yhden sivun min koko: 5
+                </Typography>
+              </Box>
+
+              <Grid>
 
                 <Field name="x">
                   {({ input, meta }) => (
@@ -210,17 +240,19 @@ const GameInit = ({ setGameParameters }) => {
               </Grid>
 
             </Grid>
-            {submitError && <div className="error">{submitError}</div>}
-            <Button type="submit" disabled={submitting} variant="outlined">
-              Play
-            </Button>
-            <Button
-              onClick={form.reset}
-              disabled={submitting || pristine}
-              variant="outlined"
-            >
-              Reset
-            </Button>
+            <Box style={{ padding: '15px' }}>
+              {submitError && <div className="error">{submitError}</div>}
+              <Button type="submit" disabled={submitting} variant="outlined">
+                Play
+              </Button>
+              {/* <Button
+                onClick={form.reset}
+                disabled={submitting || pristine}
+                variant="outlined"
+              >
+                Reset
+              </Button> */}
+            </Box>
           </Paper>
 
         </form>

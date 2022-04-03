@@ -45,7 +45,7 @@ const BoardStatus = ({
       {board && (
       <>
         <Typography>
-          {`damage done to ${opponentName}̈́'s fleet`}
+          {`${opponentName}̈́ laivaston tila`}
         </Typography>
         <Grid item xs={12}>
           {Array(measurements.y).fill(0).map((row, rowIndex) => (

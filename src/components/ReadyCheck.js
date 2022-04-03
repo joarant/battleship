@@ -61,9 +61,9 @@ const ReadyCheck = ({
           }}
         >
           <Typography variant="subtitle1" gutterBottom component="div">
-            {`${(p1Turn ? info.player1 : info.player2)} get ready`}
+            {`${(p1Turn ? info.player1 : info.player2)} valmistaudu`}
           </Typography>
-          <Button onClick={() => setReady(true)}>Ready</Button>
+          <Button onClick={() => setReady(true)}>Valmis</Button>
         </Box>
       </Box>
 

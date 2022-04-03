@@ -21,13 +21,13 @@ const GameOverScreen = ({
     const h2 = calculateHitpoints(Object.values(fleets.p2Fleet));
 
     if (h1 === h2) {
-      return 'draw';
+      return 'Tasapeli';
     }
     if (h1 > h2) {
-      return `${info.player1} won`;
+      return `${info.player1} voitti`;
     }
 
-    return `${info.player2} won`;
+    return `${info.player2} voitti`;
   };
 
   return (
@@ -83,7 +83,7 @@ const GameOverScreen = ({
             {`${getWinner()} `}
           </Typography>
           <Typography variant="subtitle1" gutterBottom component="div">
-            Refresh to play again.
+            Virkistä pelataksesi uudestaan.
           </Typography>
         </Box>
       </Box>

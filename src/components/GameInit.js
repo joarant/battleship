@@ -76,16 +76,16 @@ const GameInit = ({ setGameParameters }) => {
             }}
             variant="outlined"
           >
-            <Typography variant="h3"> BATTLESHIP </Typography>
-            <Typography variant="subtitle"> Game settings </Typography>
+            <Typography variant="h3"> Laivanupotus </Typography>
+            <Typography variant="subtitle"> Asetukset </Typography>
 
             <Grid style={{ }} container spacing={2} rowSpacing={5} direction="column">
               <Grid item>
                 <Field name="player1">
                   {({ input, meta }) => (
                     <TextField
-                      label="player 1"
-                      placeholder="player 1"
+                      label="Pelaaja 1"
+                      placeholder="Pelaaja 1"
                       onChange={(v) => input.onChange(v)}
                       error={(meta.error && meta.touched) || meta.submitError}
                     />
@@ -96,8 +96,8 @@ const GameInit = ({ setGameParameters }) => {
                 <Field name="player2">
                   {({ input, meta }) => (
                     <TextField
-                      label="player 2"
-                      placeholder="player 2"
+                      label="Pelaaja 2"
+                      placeholder="Pelaaja 2"
                       onChange={(v) => input.onChange(v)}
                       error={(meta.error && meta.touched) || meta.submitError}
                     />
@@ -113,15 +113,15 @@ const GameInit = ({ setGameParameters }) => {
                     float: 'left',
                   }}
                   >
-                    fleet
+                    Laivasto
                   </Typography>
 
                   <Field name="carrier">
                     {({ input, meta }) => (
                       <TextField
-                        label="carrier count"
+                        label="Lentotukialus määrä"
                         placeholder="1"
-                        helperText="size: 5"
+                        helperText="koko: 5"
                         onChange={(v) => input.onChange(v)}
                         error={(meta.error && meta.touched) || meta.submitError}
                       />
@@ -132,9 +132,9 @@ const GameInit = ({ setGameParameters }) => {
                   <Field name="battleship">
                     {({ input, meta }) => (
                       <TextField
-                        label="battleship count"
+                        label="taistelulaiva määrä"
                         placeholder="2"
-                        helperText="size: 4"
+                        helperText="koko: 4"
                         onChange={(v) => input.onChange(v)}
                         error={(meta.error && meta.touched) || meta.submitError}
                       />
@@ -144,9 +144,9 @@ const GameInit = ({ setGameParameters }) => {
                   <Field name="cruiser">
                     {({ input, meta }) => (
                       <TextField
-                        label="cruiser count"
+                        label="risteilijä määrä"
                         placeholder="3"
-                        helperText="size: 3"
+                        helperText="koko: 3"
                         onChange={(v) => input.onChange(v)}
                         error={(meta.error && meta.touched) || meta.submitError}
                       />
@@ -157,9 +157,9 @@ const GameInit = ({ setGameParameters }) => {
                   <Field name="submarine">
                     {({ input, meta }) => (
                       <TextField
-                        label="submarine count"
+                        label="sukellusvene määrä"
                         placeholder="4"
-                        helperText="size: 3"
+                        helperText="koko: 3"
                         onChange={(v) => input.onChange(v)}
                         error={(meta.error && meta.touched) || meta.submitError}
                       />
@@ -170,9 +170,9 @@ const GameInit = ({ setGameParameters }) => {
                   <Field name="destroyer">
                     {({ input, meta }) => (
                       <TextField
-                        label="destroyer count"
+                        label="hävittäjä määrä"
                         placeholder="5"
-                        helperText="size: 2"
+                        helperText="koko: 2"
                         onChange={(v) => input.onChange(v)}
                         error={(meta.error && meta.touched) || meta.submitError}
                       />
@@ -187,7 +187,7 @@ const GameInit = ({ setGameParameters }) => {
                 <Field name="x">
                   {({ input, meta }) => (
                     <TextField
-                      label="size x"
+                      label="leveys"
                       placeholder="10"
                       onChange={(v) => input.onChange(v)}
                       error={(meta.error && meta.touched) || meta.submitError}
@@ -199,7 +199,7 @@ const GameInit = ({ setGameParameters }) => {
                 <Field name="y">
                   {({ input, meta }) => (
                     <TextField
-                      label="size y"
+                      label="pituus"
                       placeholder="10"
                       onChange={(v) => input.onChange(v)}
                       error={(meta.error && meta.touched) || meta.submitError}

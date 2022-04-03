@@ -24,11 +24,11 @@ const GameStatus = ({
       </Typography>
 
       <Typography>
-        {`${info.player1} hitpoints: ${calculateHitpoints(Object.values(fleets.p1Fleet))}`}
+        {`${info.player1} elämäpisteitä: ${calculateHitpoints(Object.values(fleets.p1Fleet))}`}
       </Typography>
 
       <Typography>
-        {`${info.player2} hitpoints: ${calculateHitpoints(Object.values(fleets.p2Fleet))}`}
+        {`${info.player2} elämäpisteitä: ${calculateHitpoints(Object.values(fleets.p2Fleet))}`}
       </Typography>
 
       <Button

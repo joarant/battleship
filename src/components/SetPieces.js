@@ -4,6 +4,12 @@ import {
 } from '@material-ui/core';
 import Ship from './Ship';
 
+/**
+ * Piirtää ruudukon johon pelaajat asettelevat aluksensa
+ *
+ *
+ */
+
 function SetPieces({ info, shipsSet, p1Turn }) {
   const board = [];
   const x = parseInt(info.x, 10);
@@ -16,7 +22,7 @@ function SetPieces({ info, shipsSet, p1Turn }) {
   const addInfoToBoardObject = (newObject, shipId) => {
     ships[shipId] = newObject;
   };
-
+  // tarkistaa liikkeen laillisuuden, jos laiton niin älä suorita
   const checkIfMoveIsLegal = (shipSize, shipOrientation, targetCell) => {
     // math.floor(target.id / rivin pituus) = sama kaikilla jotka ovat samassa rivissä
     // mod(target.id/ rivin pituus) on sama kaikilla jotka ovat samassa pystyrivissä
@@ -47,6 +53,7 @@ function SetPieces({ info, shipsSet, p1Turn }) {
     return true;
   };
 
+  // Asettaa aluksen ruudukkoon ja antaa tämän tiedon parent elementille
   const changeMovedObject = (shipId, initialPosition, objectGrabbedCell, horizontalOrientation) => {
     window.addEventListener('mouseup', (e) => {
       const draggable = document.getElementById(shipId);
@@ -90,7 +97,7 @@ function SetPieces({ info, shipsSet, p1Turn }) {
       }
     }, { once: true });
   };
-
+  // luo ruudukon
   for (let index = 0; index < y; index += 1) {
     for (let a = 0; a < x; a += 1) {
       board.push((index * y + a).toString());

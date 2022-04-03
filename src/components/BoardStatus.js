@@ -4,6 +4,12 @@ import {
   Button, Box, Typography, Grid, Paper,
 } from '@material-ui/core';
 
+/**
+ * Pelilaudan tila
+ * Näyttää käyttäjälle mihin kohtaan pelialustaa on hyökätty
+ *
+ *
+ */
 const BoardStatus = ({
   measurements, fleet, board, opponentName, showShipPositions,
 }) => {

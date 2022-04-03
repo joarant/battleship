@@ -5,6 +5,14 @@ import {
 import BoardStatus from './BoardStatus';
 import calculateHitpoints from '../utils/calculateHitpoints';
 
+/**
+ * Pelin jälkipyykki ruutu
+ * Kertoo pelin lopullisen tilanteen
+ * Paljastaa mihin ruutuihin pelaajat lopulta asettivat aluksensa
+ * Paljastaa pelin voittajan
+ *
+ *
+ */
 const GameOverScreen = ({
   boards, info, fleets,
 }) => {

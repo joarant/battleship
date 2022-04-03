@@ -1,3 +1,6 @@
+/**
+ * Laskee laivaston elämäpisteet
+ */
 const calculateHitpoints = (fleet) => {
   let hitpoints = 0;
   fleet.forEach((ship) => {

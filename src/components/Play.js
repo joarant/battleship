@@ -4,12 +4,19 @@ import {
 } from '@material-ui/core';
 import BoardCell from './BoardCell';
 
+/**
+ * Varsinainen pelin pelaaminen taphtuu täällä
+ * Piirtää nappuloilla täytetyn ruudukon
+ * Pelaajat painavat nappuloita arvataksensa vastustajan alusten paikan
+ *
+ *
+ */
 function Play({
   measurements, ships, updateBoardStatus, currentBoard,
 }) {
   const [board, setBoard] = useState(currentBoard);
 
-  // Forms cells
+  // Luo ruudut
   const tempBoard = currentBoard;
   if (Object.keys(tempBoard).length === 0) {
     for (let index = 0; index < measurements.x * measurements.y; index += 1) {
@@ -24,6 +31,7 @@ function Play({
     });
   }
 
+  // tuo pelitilan muutoksen parent elementtiin
   const updateBoard = (cell) => {
     tempBoard[cell].hit = true;
     updateBoardStatus(tempBoard, tempBoard[cell]?.shipId);

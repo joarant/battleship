@@ -8,6 +8,12 @@ import GameStatus from './GameStatusScreen';
 import calculateHitpoints from '../utils/calculateHitpoints';
 import GameOverScreen from './GameOverScreen';
 
+/**
+ * Sisältää peli elementit ja seuraa pelin tilaa
+ *
+ *
+ */
+
 const Game = () => {
   // id :{hit:false, ship: false}
   const [fleets, setFleets] = useState({
@@ -27,7 +33,7 @@ const Game = () => {
   const [p1Turn, setP1Turn] = useState(true);
   const [gameOver, setGameOver] = useState(false);
   const [ReadyCheckDone, setReadyCheckDone] = useState(false);
-
+  // laivatyypit
   const shipObjects = {
     carrier: {
       type: 'CARRIER', size: 5, hitpoints: 0, coordinates: [],
@@ -45,7 +51,7 @@ const Game = () => {
       type: 'DESTROYER', size: 2, hitpoints: 0, coordinates: [],
     },
   };
-
+  // Tuo pelin pystytykseen liittyvät asetukset tänne
   const setInfo = (info) => {
     const availableShips = {};
     const shipKeys = ['carrier', 'battleship', 'cruiser', 'submarine', 'destroyer'];
@@ -60,7 +66,7 @@ const Game = () => {
     infoTemp.availableShips = availableShips;
     setInitInfo(infoTemp);
   };
-
+  // funktioita joilla säädellään pelintilaa
   const setReady = (state) => {
     setReadyCheckDone(state);
   };

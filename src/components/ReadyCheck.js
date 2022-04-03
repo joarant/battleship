@@ -4,6 +4,10 @@ import {
 } from '@material-ui/core';
 import BoardStatus from './BoardStatus';
 
+/**
+ * Sisältää molempien pelaajien pelilautojen tilan,
+ * sekä toimii valmiustarkastuksena vuorojen välissä
+ */
 const ReadyCheck = ({
   setReady, boards, info, p1Turn, fleets,
 }) => {

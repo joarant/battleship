@@ -4,6 +4,13 @@ import {
 } from '@material-ui/core';
 import calculateHitpoints from '../utils/calculateHitpoints';
 
+/**
+ * Informoi pelaajia hitpoint tilanteesta
+ * Sisältää END GAME painikkeen jolla pelin saa loppumaan heti
+ *
+ *
+ */
+
 const GameStatus = ({
   fleets, gameOverFunc, info,
 }) => (

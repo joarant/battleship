@@ -4,6 +4,12 @@ import {
   TextField, Paper, Button, Grid, Typography,
 } from '@material-ui/core';
 
+/**
+ * Pelin pystyttämiseen liittyvät asetukset
+ * eli pelaajien nimet, alukset ja ruudukon koko
+ *
+ *
+ */
 const GameInit = ({ setGameParameters }) => {
   const onSubmit = async (values) => {
     setGameParameters(values);

@@ -1,5 +1,10 @@
 import React, { useEffect, useState } from 'react';
 
+/**
+ * Alusta kuvastava elementti
+ * Liikuteltava drag and drop tyyliin
+ * Käytetään vain alusten asettelussa
+ */
 function Ship({
   sprite, size, setShip, imgId,
 }) {
@@ -38,8 +43,8 @@ function Ship({
       pos4 = 0;
 
     function elementDrag(e) {
-      let eve = e;
-      eve = e || window.event;
+      // let eve = e;
+      // eve = e || window.event;
       e.preventDefault();
       // calculate the new cursor position:
       pos1 = pos3 - e.clientX;
@@ -56,8 +61,8 @@ function Ship({
       setInitialPosition(TempinitialPosition);
 
       setMouseTransparent(true);
-      let eve = e;
-      eve = e || window.event;
+      // let eve = e;
+      // eve = e || window.event;
       e.preventDefault();
       // get the mouse cursor position at startup:
       pos3 = e.clientX;
@@ -75,9 +80,13 @@ function Ship({
 
     dragEle.onmousedown = dragMouseDown;
   }
+  // suorittaa, kun elementit renderöity tai jos komponentin tietyt tilat muuttuvat
   useEffect(() => {
     ship = document.getElementById(imgId);
     dragElement(ship);
+    // Jotkut funktiot ovat sidottuina käyttäjän antamiin inputteihin.
+    // Sidotut funktiot säilyttävät vanhaa tietoa komponentin tilasta.
+    // Tällä on tarkoitus päivittää funktiossa olevat tiedot.
     if (document.onmouseup !== null) {
       document.onmouseup = closeDragElement;
     }

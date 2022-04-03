@@ -7,6 +7,8 @@ import {
 const BoardStatus = ({
   measurements, fleet, board, opponentName, showShipPositions,
 }) => {
+  console.log(fleet);
+
   const getColor = (cellStatus) => {
     if (cellStatus) {
       if (cellStatus.ship && !cellStatus.hit && showShipPositions) {
@@ -14,12 +16,16 @@ const BoardStatus = ({
       }
       if (cellStatus.ship && cellStatus.hit) {
         if (fleet[cellStatus.shipId].hitpoints === 0) {
+          console.log(fleet[cellStatus.shipId].hitpoints, opponentName);
+          console.log(fleet, opponentName);
+
           return 'black';
         }
+        console.log('pp', opponentName);
+
         return 'darkred';
       }
       if (!cellStatus.ship && cellStatus.hit) {
-        console.log('grey');
         return '#808080';
       }
     }

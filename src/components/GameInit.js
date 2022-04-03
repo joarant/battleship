@@ -6,7 +6,6 @@ import {
 
 const GameInit = ({ setGameParameters }) => {
   const onSubmit = async (values) => {
-    console.log(values, 'submit');
     setGameParameters(values);
   };
   const requiredFields = ['player1', 'player2'];
@@ -20,7 +19,6 @@ const GameInit = ({ setGameParameters }) => {
       onSubmit={onSubmit}
       validate={(values) => {
         const errors = {};
-        // console.log(values);
         let minSize = 0;
         let minSideSize = 2;
 

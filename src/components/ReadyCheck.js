@@ -7,7 +7,7 @@ import BoardStatus from './BoardStatus';
 const ReadyCheck = ({
   setReady, boards, info, p1Turn, fleets,
 }) => {
-  console.log(boards);
+  console.log(fleets, 're');
 
   return (
     <Box

@@ -28,7 +28,6 @@ function SetPieces({ info, shipsSet, p1Turn }) {
           return false;
         }
         if (!(Math.floor(parseInt(nextCell.id, 10) / x) === refrenceNum)) {
-          console.log('laiton');
           return false;
         }
       }
@@ -41,7 +40,6 @@ function SetPieces({ info, shipsSet, p1Turn }) {
         }
 
         if (!(parseInt(nextCell.id, 10) % x === refrenceNum)) {
-          console.log('laiton');
           return false;
         }
       }
@@ -62,7 +60,6 @@ function SetPieces({ info, shipsSet, p1Turn }) {
           (parseInt(e.target.id, 10) - objectGrabbedCell * x).toString(),
         );
       }
-      // console.log(correctCell.id, e.target.id);
       if (board.includes(correctCell?.id)
       && checkIfMoveIsLegal(ships[shipId].size, horizontalOrientation, correctCell)) {
         const rect = correctCell.getBoundingClientRect();
@@ -72,7 +69,6 @@ function SetPieces({ info, shipsSet, p1Turn }) {
 
         const coordinateArray = [];
         if (!horizontalOrientation) {
-          // console.log('pysty');
           for (let index = 0; index < ships[shipId].size; index += 1) {
             coordinateArray.push((parseInt(correctCell.id, 10) + index * x).toString());
           }
@@ -103,14 +99,6 @@ function SetPieces({ info, shipsSet, p1Turn }) {
 
   return (
     <>
-      {Object.keys(ships).map((ship) => (
-        <Ship
-          imgId={ship}
-          setShip={changeMovedObject}
-          size={ships[ship].size}
-          key={ship}
-        />
-      ))}
 
       <Grid
         item
@@ -119,6 +107,16 @@ function SetPieces({ info, shipsSet, p1Turn }) {
         style={{
         }}
       >
+
+        {Object.keys(ships).map((ship) => (
+          <Ship
+            imgId={ship}
+            setShip={changeMovedObject}
+            size={ships[ship].size}
+            key={ship}
+          />
+        ))}
+
         <Typography variant="h5">
           {`${(p1Turn ? info.player1 : info.player2)} set your fleet`}
 
@@ -143,7 +141,8 @@ function SetPieces({ info, shipsSet, p1Turn }) {
           </Grid>
         ))}
       </Grid>
-      <Button onClick={() => shipsSet(ships)}> Done </Button>
+
+      <Button onClick={() => shipsSet(ships)} variant="outlined"> Done </Button>
     </>
   );
 }

@@ -10,7 +10,7 @@ import GameOverScreen from './GameOverScreen';
 
 const Game = () => {
   // id :{hit:false, ship: false}
-  const [ships, setShips] = useState({
+  const [fleets, setFleets] = useState({
     p1Fleet: {
 
     },
@@ -77,14 +77,13 @@ const Game = () => {
     setP1Turn(!p1Turn);
     setReadyCheckDone(false);
   };
-  console.log(boards);
   const updateStatus = (board, ship) => {
     const tempBoards = boards;
     tempBoards[(p1Turn ? 'p1Board' : 'p2Board')] = board;
     if (ship != null) {
-      const tempShips = ships;
+      const tempShips = fleets;
       tempShips[(p1Turn ? 'p2Fleet' : 'p1Fleet')][ship].hitpoints -= 1;
-      setShips(tempShips);
+      setFleets(tempShips);
       setHitpoints({
         p1: calculateHitpoints(Object.values(tempShips.p1Fleet)),
         p2: calculateHitpoints(Object.values(tempShips.p2Fleet)),
@@ -96,28 +95,26 @@ const Game = () => {
     } else {
       switchTurns();
     }
-    console.log('up boards');
     setBoards(tempBoards);
   };
 
   const setFleet = (fleet) => {
-    console.log(fleet, ',ok');
-    const tempShips = ships;
+    const tempShips = fleets;
     tempShips[(!p1ShipsSet && !p2ShipsSet ? 'p1Fleet' : 'p2Fleet')] = fleet;
-    console.log(tempShips, ',ok2');
 
     if (!p1ShipsSet) {
       setP1ShipsSet(true);
     } else {
       setP2ShipsSet(true);
     }
-    setShips(tempShips);
+    setFleets(tempShips);
     setHitpoints({
       p1: calculateHitpoints(Object.values(tempShips.p1Fleet)),
       p2: calculateHitpoints(Object.values(tempShips.p2Fleet)),
     });
   };
 
+  console.log(fleets, 'main');
   return (
     <>
       {!initInfo && !p1ShipsSet && !p2ShipsSet && (<GameInit setGameParameters={setInfo} />)}
@@ -134,17 +131,17 @@ const Game = () => {
         boards={boards}
         info={initInfo}
         p1Turn={p1Turn}
-        fleets={ships}
+        fleets={fleets}
       />
       )}
 
       {p1ShipsSet && p2ShipsSet && !gameOver && p1Turn && ReadyCheckDone
       && (
       <Grid>
-        <GameStatus fleets={ships} gameOverFunc={setGameDone} info={initInfo} />
+        <GameStatus fleets={fleets} gameOverFunc={setGameDone} info={initInfo} />
         <Play
           measurements={{ x: parseInt(initInfo.x, 10), y: parseInt(initInfo.y, 10) }}
-          ships={ships.p2Fleet}
+          ships={fleets.p2Fleet}
           updateBoardStatus={updateStatus}
           currentBoard={boards.p1Board}
         />
@@ -158,17 +155,17 @@ const Game = () => {
         boards={boards}
         info={initInfo}
         p1Turn={p1Turn}
-        fleets={ships}
+        fleets={fleets}
       />
       )}
 
       {p1ShipsSet && p2ShipsSet && !gameOver && !p1Turn && ReadyCheckDone
       && (
       <>
-        <GameStatus fleets={ships} gameOverFunc={setGameDone} info={initInfo} />
+        <GameStatus fleets={fleets} gameOverFunc={setGameDone} info={initInfo} />
         <Play
           measurements={{ x: parseInt(initInfo.x, 10), y: parseInt(initInfo.y, 10) }}
-          ships={ships.p1Fleet}
+          ships={fleets.p1Fleet}
           updateBoardStatus={updateStatus}
           currentBoard={boards.p2Board}
         />
@@ -179,7 +176,7 @@ const Game = () => {
       <GameOverScreen
         boards={boards}
         info={initInfo}
-        fleets={ships}
+        fleets={fleets}
       />
       )}
 

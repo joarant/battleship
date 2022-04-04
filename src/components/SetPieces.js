@@ -59,7 +59,7 @@ function SetPieces({ info, shipsSet, p1Turn }) {
   };
 
   // Asettaa aluksen ruudukkoon ja antaa tämän tiedon parent elementille
-  const changeMovedObject = (shipId, initialPosition, objectGrabbedCell, horizontalOrientation) => {
+  const changeMovedObject = (shipId, objectGrabbedCell, horizontalOrientation) => {
     window.addEventListener('mouseup', (e) => {
       const draggable = document.getElementById(shipId);
       let correctCell = null;
@@ -76,8 +76,24 @@ function SetPieces({ info, shipsSet, p1Turn }) {
       && checkIfMoveIsLegal(ships[shipId].size, horizontalOrientation, correctCell)) {
         const rect = correctCell.getBoundingClientRect();
 
-        draggable.style.left = `${rect.x}px`;
-        draggable.style.top = `${rect.y}px`;
+        correctCell.appendChild(document.getElementById(shipId));
+
+        if (horizontalOrientation) {
+          draggable.style.left = '0px';
+          draggable.style.top = '0px';
+        } else {
+          const width = -((draggable.getBoundingClientRect().height
+           - draggable.getBoundingClientRect().width) / 2);
+          const height = ((draggable.getBoundingClientRect().height
+          - draggable.getBoundingClientRect().width) / 2);
+
+          console.log(draggable.getBoundingClientRect().x, draggable.getBoundingClientRect().y);
+
+          console.log(width, height);
+
+          draggable.style.left = `${width}px`;
+          draggable.style.top = `${height}px`;
+        }
 
         const coordinateArray = [];
         if (!horizontalOrientation) {
@@ -96,9 +112,15 @@ function SetPieces({ info, shipsSet, p1Turn }) {
             hitpoints: coordinateArray.length,
           },
         }, shipId);
+      } else if (horizontalOrientation) {
+        draggable.style.left = '0px';
+        draggable.style.top = '0px';
       } else {
-        draggable.style.left = `${initialPosition.x}px`;
-        draggable.style.top = `${initialPosition.y}px`;
+        console.log('moi');
+        draggable.style.left = `${-((draggable.getBoundingClientRect().height
+          - draggable.getBoundingClientRect().width) / 2)}px`;
+        draggable.style.top = `${((draggable.getBoundingClientRect().height
+           - draggable.getBoundingClientRect().width) / 2)}px`;
       }
     }, { once: true });
   };
@@ -155,7 +177,7 @@ function SetPieces({ info, shipsSet, p1Turn }) {
                         width: 60,
                         backgroundColor: 'white',
                       }}
-                      style={{ alignContent: 'center' }}
+                      style={{ position: 'relative' }}
                       variant="outlined"
                     />
                   </Grid>
@@ -167,11 +189,15 @@ function SetPieces({ info, shipsSet, p1Turn }) {
 
             {Object.keys(ships).map((ship) => (
               <Grid key={ship}>
-                <Paper sx={{
-                  height: 60,
-                  width: 300,
-                  backgroundColor: 'white',
-                }}
+                <Paper
+                  id={`${ship}-paper`}
+                  sx={{
+                    height: 60,
+                    width: 300,
+                    backgroundColor: 'white',
+                  }}
+                  style={{ position: 'relative' }}
+
                 >
                   <Ship
                     imgId={ship}

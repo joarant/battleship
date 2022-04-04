@@ -21,6 +21,8 @@ const GameInit = ({ setGameParameters }) => {
   const shipFields = {
     carrier: 5, battleship: 4, cruiser: 3, submarine: 3, destroyer: 2,
   };
+  // positive integer
+  const regex = /^[0-9]+$/;
 
   return (
     <Form
@@ -28,11 +30,10 @@ const GameInit = ({ setGameParameters }) => {
       validate={(values) => {
         const errors = {};
         let tmpMinSize = 0;
-
         Object.keys(shipFields).forEach((element) => {
           tmpMinSize += (values[element] ? shipFields[element] * parseInt(values[element], 10) : 0);
-          if (values[element] && !(parseInt(values[element], 10) >= 0)) {
-            errors[element] = 'Required';
+          if (values[element] && !regex.test(values[element])) {
+            errors[element] = 'luvun täytyy olla yli 0';
           }
         });
 
@@ -43,12 +44,15 @@ const GameInit = ({ setGameParameters }) => {
         });
 
         gridSizeFields.forEach((element) => {
-          if (!values[element]
-             || parseInt(values[gridSizeFields[0]], 10)
+          if (!values[element]) {
+            errors[element] = 'Required';
+          } else if (!regex.test(values[element])) {
+            errors[element] = 'luvun täytyy olla yli 0';
+          } else if (parseInt(values[gridSizeFields[0]], 10)
              * parseInt(values[gridSizeFields[1]], 10) < minSize
              || (parseInt(gridSizeFields[0], 10) < 5
              && parseInt(gridSizeFields[1], 10) < 5)) {
-            errors[element] = 'Required';
+            errors[element] = 'Luku liian pieni';
           }
         });
 
@@ -57,7 +61,6 @@ const GameInit = ({ setGameParameters }) => {
             errors[element] = 'Required';
           }
         });
-        console.log(tmpMinSize);
         if (tmpMinSize !== minSize) {
           setMinSize(tmpMinSize);
         }
@@ -126,7 +129,7 @@ const GameInit = ({ setGameParameters }) => {
                       <Field name="carrier">
                         {({ input, meta }) => (
                           <TextField
-                            label="Lentotukialukset"
+                            label="lentotukialukset"
                             placeholder="1"
                             helperText="koko: 5"
                             onChange={(v) => input.onChange(v)}
@@ -196,7 +199,7 @@ const GameInit = ({ setGameParameters }) => {
                   </Grid>
                 </Box>
               </Grid>
-              <Box style={{ padding: '15px' }}>
+              <Box style={{ marginLeft: '25px' }}>
 
                 <Typography variant="subtitle" style={{ float: 'left', marginLeft: '10px' }}>
                   Ruudukon koko
@@ -212,7 +215,7 @@ const GameInit = ({ setGameParameters }) => {
                 </Typography>
               </Box>
 
-              <Grid>
+              <Grid item>
 
                 <Field name="x">
                   {({ input, meta }) => (

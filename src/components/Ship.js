@@ -18,6 +18,9 @@ function Ship({
   const mousePosition = useRef(initMousePosWithinObject);
   const orientation = useRef(horizontalOrientation);
 
+  const dimHor = useRef(null);
+  const dimVer = useRef(null);
+
   const inputEl = useRef(null);
   let ship = null;
 
@@ -28,15 +31,17 @@ function Ship({
 
       if (!orientation.current) {
         orientation.current = true;
-        ship.style.transform = 'rotate(360deg)';
-        console.log(inputEl.current.style.left);
-        console.log(inputEl.current.style.top);
+        ship.style.transform = 'rotate(0deg)';
+
+        console.log(ship.getBoundingClientRect().width, 'w');
+        console.log(ship.getBoundingClientRect().height, 'h');
         setHorizontalOrientation(true);
       } else {
         orientation.current = false;
         ship.style.transform = 'rotate(90deg)';
-        console.log(inputEl.current.transform);
-        console.log(inputEl.current.style.top);
+
+        console.log(ship.getBoundingClientRect().width, 'w');
+        console.log(ship.getBoundingClientRect().height, 'h');
         setHorizontalOrientation(false);
       }
     }
@@ -54,7 +59,7 @@ function Ship({
     const grabCell = (orientation.current
       ? Math.floor(mousePosition.current.x / 60)
       : Math.floor(mousePosition.current.y / 60));
-    setShip(imgId, position.current, grabCell, orientation.current);
+    setShip(imgId, grabCell, orientation.current);
   };
 
   function dragElement(elmnt) {
@@ -108,11 +113,11 @@ function Ship({
   useEffect(() => {
     ship = document.getElementById(imgId);
     ship.style.cursor = 'move';
+    console.log(ship.parentElement.id, 'moo');
     dragElement(ship);
   }, []);
 
   return (
-
     <img
       id={imgId}
       // src={(horizontalOrientation ? 'images/arrow.svg' : 'images/arrow2.svg')}
@@ -124,9 +129,16 @@ function Ship({
       width={60 * size}
       height={60}
       style={{
-        position: (mouseTransparent ? 'absolute' : 'relative'),
-        pointerEvents: (mouseTransparent ? 'none' : 'auto'),
-        left: (mouseTransparent ? 'auto' : '0px'),
+        position: (transparent.current ? 'absolute' : 'absolute'),
+        pointerEvents: (transparent.current ? 'none' : 'auto'),
+        top: '0%',
+        left: '0%',
+        // msTransform: 'translate(0%, 0%)',
+        transform: 'translate(0%, 0%)',
+        zIndex: 100,
+        // left: (mouseTransparent ? 'inherit' : 'inherit'),
+        // top: (mouseTransparent ? 'inherit' : 'inherit'),
+
       }}
     />
   );

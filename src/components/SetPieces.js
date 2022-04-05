@@ -161,9 +161,7 @@ function SetPieces({ info, shipsSet, p1Turn }) {
             variant="outlined"
             style={{
               marginLeft: '32.75%',
-
               // marginRight: 'auto',
-
             }}
           >
             {Array(y).fill(0).map((column, columnIndex) => (

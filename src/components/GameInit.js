@@ -6,7 +6,6 @@ import {
 
 /**
  * Pelin pystyttämiseen liittyvät asetukset
- * eli pelaajien nimet, alukset ja ruudukon koko
  *
  *
  */
@@ -31,23 +30,26 @@ const GameInit = ({ setGameParameters }) => {
         const errors = {};
         let tmpMinSize = 0;
         Object.keys(shipFields).forEach((element) => {
-          tmpMinSize += (values[element] ? shipFields[element] * parseInt(values[element], 10) : 0);
+          tmpMinSize += (values[element] && regex.test(values[element])
+            ? shipFields[element] * parseInt(values[element], 10) : 0);
+
+          if (tmpMinSize <= 0) {
+            errors[element] = 'Tarvitaan ainakin 1 laiva';
+          }
           if (values[element] && !regex.test(values[element])) {
-            errors[element] = 'luvun täytyy olla yli 0';
+            errors[element] = 'Vain positiivisiä kokonaislukuja';
           }
         });
 
         Object.keys(shipFields).forEach((element) => {
-          if (tmpMinSize <= 0) {
-            errors[element] = 'Required';
-          }
+
         });
 
         gridSizeFields.forEach((element) => {
           if (!values[element]) {
             errors[element] = 'Required';
           } else if (!regex.test(values[element])) {
-            errors[element] = 'luvun täytyy olla yli 0';
+            errors[element] = 'Vain positiivisiä kokonaislukuja';
           } else if (parseInt(values[gridSizeFields[0]], 10)
              * parseInt(values[gridSizeFields[1]], 10) < minSize
              || (parseInt(gridSizeFields[0], 10) < 5
@@ -74,6 +76,7 @@ const GameInit = ({ setGameParameters }) => {
         touched,
         pristine,
         values,
+        errors,
       }) => (
         <form onSubmit={handleSubmit}>
           <Paper
@@ -94,7 +97,10 @@ const GameInit = ({ setGameParameters }) => {
                       label="Pelaaja 1"
                       placeholder="Pelaaja 1"
                       onChange={(v) => input.onChange(v)}
+                      helperText={((meta.error && meta.touched)
+                        || meta.submitError) && errors.player1}
                       error={(meta.error && meta.touched) || meta.submitError}
+
                     />
 
                   )}
@@ -106,6 +112,8 @@ const GameInit = ({ setGameParameters }) => {
                       label="Pelaaja 2"
                       placeholder="Pelaaja 2"
                       onChange={(v) => input.onChange(v)}
+                      helperText={((meta.error && meta.touched)
+                        || meta.submitError) && errors.player2}
                       error={(meta.error && meta.touched) || meta.submitError}
                     />
 
@@ -131,7 +139,7 @@ const GameInit = ({ setGameParameters }) => {
                           <TextField
                             label="lentotukialukset"
                             placeholder="1"
-                            helperText="koko: 5"
+                            helperText={((meta.error && meta.touched) || meta.submitError) ? errors.carrier : 'koko: 5'}
                             onChange={(v) => input.onChange(v)}
                             error={(meta.error && meta.touched) || meta.submitError}
                           />
@@ -144,7 +152,7 @@ const GameInit = ({ setGameParameters }) => {
                           <TextField
                             label="taistelulaivat"
                             placeholder="2"
-                            helperText="koko: 4"
+                            helperText={((meta.error && meta.touched) || meta.submitError) ? errors.battleship : 'koko: 4'}
                             onChange={(v) => input.onChange(v)}
                             error={(meta.error && meta.touched) || meta.submitError}
                           />
@@ -158,7 +166,7 @@ const GameInit = ({ setGameParameters }) => {
                           <TextField
                             label="risteilijät"
                             placeholder="3"
-                            helperText="koko: 3"
+                            helperText={((meta.error && meta.touched) || meta.submitError) ? errors.cruiser : 'koko: 3'}
                             onChange={(v) => input.onChange(v)}
                             error={(meta.error && meta.touched) || meta.submitError}
                           />
@@ -171,7 +179,7 @@ const GameInit = ({ setGameParameters }) => {
                           <TextField
                             label="sukellusveneet"
                             placeholder="4"
-                            helperText="koko: 3"
+                            helperText={((meta.error && meta.touched) || meta.submitError) ? errors.submarine : 'koko: 3'}
                             onChange={(v) => input.onChange(v)}
                             error={(meta.error && meta.touched) || meta.submitError}
                           />
@@ -187,7 +195,7 @@ const GameInit = ({ setGameParameters }) => {
                           <TextField
                             label="hävittäjät"
                             placeholder="5"
-                            helperText="koko: 2"
+                            helperText={((meta.error && meta.touched) || meta.submitError) ? errors.destroyer : 'koko: 2'}
                             onChange={(v) => input.onChange(v)}
                             error={(meta.error && meta.touched) || meta.submitError}
                           />
@@ -223,6 +231,8 @@ const GameInit = ({ setGameParameters }) => {
                       label="leveys"
                       placeholder="10"
                       onChange={(v) => input.onChange(v)}
+                      helperText={((meta.error && meta.touched)
+                         || meta.submitError) && errors.x}
                       error={(meta.error && meta.touched) || meta.submitError}
                     />
 
@@ -235,6 +245,8 @@ const GameInit = ({ setGameParameters }) => {
                       label="pituus"
                       placeholder="10"
                       onChange={(v) => input.onChange(v)}
+                      helperText={((meta.error && meta.touched)
+                        || meta.submitError) && errors.y}
                       error={(meta.error && meta.touched) || meta.submitError}
                     />
 

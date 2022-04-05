@@ -32,35 +32,34 @@ const GameInit = ({ setGameParameters }) => {
         Object.keys(shipFields).forEach((element) => {
           tmpMinSize += (values[element] && regex.test(values[element])
             ? shipFields[element] * parseInt(values[element], 10) : 0);
-
-          if (tmpMinSize <= 0) {
-            errors[element] = 'Tarvitaan ainakin 1 laiva';
-          }
           if (values[element] && !regex.test(values[element])) {
             errors[element] = 'Vain positiivisiä kokonaislukuja';
           }
         });
 
         Object.keys(shipFields).forEach((element) => {
-
+          if (tmpMinSize <= 0) {
+            errors[element] = 'Tarvitaan ainakin 1 laiva';
+          }
         });
 
         gridSizeFields.forEach((element) => {
           if (!values[element]) {
-            errors[element] = 'Required';
+            errors[element] = 'Pakollinen kenttä';
           } else if (!regex.test(values[element])) {
             errors[element] = 'Vain positiivisiä kokonaislukuja';
           } else if (parseInt(values[gridSizeFields[0]], 10)
-             * parseInt(values[gridSizeFields[1]], 10) < minSize
-             || (parseInt(gridSizeFields[0], 10) < 5
-             && parseInt(gridSizeFields[1], 10) < 5)) {
-            errors[element] = 'Luku liian pieni';
+             * parseInt(values[gridSizeFields[1]], 10) < minSize) {
+            errors[element] = 'Ruudukko alle laivaston koon';
+          } else if ((parseInt(values[gridSizeFields[0]], 10) < 5
+            && parseInt(values[gridSizeFields[1]], 10) < 5)) {
+            errors[element] = 'Sivut liian pieniä';
           }
         });
 
         requiredFields.forEach((element) => {
           if (!values[element]) {
-            errors[element] = 'Required';
+            errors[element] = 'Pakollinen kenttä';
           }
         });
         if (tmpMinSize !== minSize) {

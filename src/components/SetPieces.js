@@ -29,12 +29,9 @@ function SetPieces({ info, shipsSet, p1Turn }) {
       for (let index = 0; index < shipSize; index += 1) {
         const nextCell = document.getElementById(parseInt(targetCell.id, 10) + index);
         if (nextCell === null) {
-          console.log('laiton');
           return false;
         }
         if (!(Math.floor(parseInt(nextCell.id, 10) / x) === refrenceNum)) {
-          console.log('laiton');
-
           return false;
         }
       }
@@ -43,14 +40,10 @@ function SetPieces({ info, shipsSet, p1Turn }) {
       for (let index = 0; index < shipSize; index += 1) {
         const nextCell = document.getElementById(parseInt(targetCell.id, 10) + index * x);
         if (nextCell === null) {
-          console.log('laiton');
-
           return false;
         }
 
         if (!(parseInt(nextCell.id, 10) % x === refrenceNum)) {
-          console.log('laiton');
-
           return false;
         }
       }
@@ -87,10 +80,6 @@ function SetPieces({ info, shipsSet, p1Turn }) {
           const height = ((draggable.getBoundingClientRect().height
           - draggable.getBoundingClientRect().width) / 2);
 
-          console.log(draggable.getBoundingClientRect().x, draggable.getBoundingClientRect().y);
-
-          console.log(width, height);
-
           draggable.style.left = `${width}px`;
           draggable.style.top = `${height}px`;
         }
@@ -116,7 +105,6 @@ function SetPieces({ info, shipsSet, p1Turn }) {
         draggable.style.left = '0px';
         draggable.style.top = '0px';
       } else {
-        console.log('moi');
         draggable.style.left = `${-((draggable.getBoundingClientRect().height
           - draggable.getBoundingClientRect().width) / 2)}px`;
         draggable.style.top = `${((draggable.getBoundingClientRect().height

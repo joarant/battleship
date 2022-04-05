@@ -57,7 +57,7 @@ const GameOverScreen = ({
               board={boards?.p1Board}
               opponentName={info.player2}
               measurements={{ x: parseInt(info.x, 10), y: parseInt(info.y, 10) }}
-              fleet={fleets.p1Fleet}
+              fleet={fleets.p2Fleet}
               showShipPositions
             />
           </Grid>
@@ -67,7 +67,7 @@ const GameOverScreen = ({
               board={boards?.p2Board}
               opponentName={info.player1}
               measurements={{ x: parseInt(info.x, 10), y: parseInt(info.y, 10) }}
-              fleet={fleets.p2Fleet}
+              fleet={fleets.p1Fleet}
               showShipPositions
             />
           </Grid>

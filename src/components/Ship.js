@@ -25,23 +25,14 @@ function Ship({
   let ship = null;
 
   const rotateShip = (es) => {
-    console.log(transparent.current);
     if ((es.key === 'r' || es.key === 'R') && transparent.current) {
-      console.log('tapahtuma');
-
       if (!orientation.current) {
         orientation.current = true;
         ship.style.transform = 'rotate(0deg)';
-
-        console.log(ship.getBoundingClientRect().width, 'w');
-        console.log(ship.getBoundingClientRect().height, 'h');
         setHorizontalOrientation(true);
       } else {
         orientation.current = false;
         ship.style.transform = 'rotate(90deg)';
-
-        console.log(ship.getBoundingClientRect().width, 'w');
-        console.log(ship.getBoundingClientRect().height, 'h');
         setHorizontalOrientation(false);
       }
     }
@@ -113,7 +104,6 @@ function Ship({
   useEffect(() => {
     ship = document.getElementById(imgId);
     ship.style.cursor = 'move';
-    console.log(ship.parentElement.id, 'moo');
     dragElement(ship);
   }, []);
 

@@ -1,7 +1,7 @@
 /* eslint-disable react/jsx-no-useless-fragment */
-import React, { useEffect, useState } from 'react';
+import React from 'react';
 import {
-  Button, Box, Typography, Grid, Paper,
+  Typography, Grid, Paper,
 } from '@material-ui/core';
 
 /**
@@ -13,8 +13,6 @@ import {
 const BoardStatus = ({
   measurements, fleet, board, opponentName, showShipPositions,
 }) => {
-  console.log(fleet);
-
   const getColor = (cellStatus) => {
     if (cellStatus) {
       if (cellStatus.ship && !cellStatus.hit && showShipPositions) {
@@ -22,12 +20,8 @@ const BoardStatus = ({
       }
       if (cellStatus.ship && cellStatus.hit) {
         if (fleet[cellStatus.shipId].hitpoints === 0) {
-          console.log(fleet[cellStatus.shipId].hitpoints, opponentName);
-          console.log(fleet, opponentName);
-
           return 'black';
         }
-        console.log('pp', opponentName);
 
         return 'darkred';
       }

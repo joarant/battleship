@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useState } from 'react';
 import { Grid } from '@material-ui/core';
 import GameInit from './GameInit';
 import SetPieces from './SetPieces';
@@ -10,8 +10,6 @@ import GameOverScreen from './GameOverScreen';
 
 /**
  * Sisältää peli elementit ja seuraa pelin tilaa
- *
- *
  */
 
 const Game = () => {
@@ -120,15 +118,14 @@ const Game = () => {
     });
   };
 
-  console.log(fleets, 'main');
   return (
     <>
       {!initInfo && !p1ShipsSet && !p2ShipsSet && (<GameInit setGameParameters={setInfo} />)}
 
       {initInfo && !p1ShipsSet && (
-      <SetPieces info={initInfo} shipsSet={setFleet} p1Turn />)}
+      <SetPieces info={initInfo} setShips={setFleet} p1Turn />)}
       {initInfo && !p2ShipsSet && p1ShipsSet && (
-      <SetPieces info={initInfo} shipsSet={setFleet} p1Turn={false} />)}
+      <SetPieces info={initInfo} setShips={setFleet} p1Turn={false} />)}
 
       {p1ShipsSet && p2ShipsSet && !gameOver && p1Turn && !ReadyCheckDone
       && (

@@ -10,66 +10,61 @@ import BoardStatus from './BoardStatus';
  */
 const ReadyCheck = ({
   setReady, boards, info, p1Turn, fleets,
-}) => {
-  console.log(fleets, 're');
+}) => (
+  <Box
+    style={{
+      display: 'flex',
+      justifyContent: 'center',
+      alignItems: 'center',
 
-  return (
-    <Box
-      style={{
-        display: 'flex',
-        justifyContent: 'center',
-        alignItems: 'center',
-
-      }}
+    }}
+  >
+    <Box style={{
+      // width: '50px',
+      // height: '50px',
+      top: '5%',
+      position: 'absolute',
+      margiTop: '50px',
+    }}
     >
-      <Box style={{
-        // width: '50px',
-        // height: '50px',
-        top: '5%',
-        position: 'absolute',
-        margiTop: '50px',
-      }}
+      <Grid
+        container
+        spacing={5}
       >
-        <Grid
-          container
-          spacing={5}
+        <Grid item>
+          <BoardStatus
+            board={boards?.p1Board}
+            opponentName={info.player2}
+            measurements={{ x: parseInt(info.x, 10), y: parseInt(info.y, 10) }}
+            fleet={fleets.p2Fleet}
+          />
+        </Grid>
+        <Grid item>
 
-        >
-          <Grid item>
-            <BoardStatus
-              board={boards?.p1Board}
-              opponentName={info.player2}
-              measurements={{ x: parseInt(info.x, 10), y: parseInt(info.y, 10) }}
-              fleet={fleets.p2Fleet}
-            />
-          </Grid>
-          <Grid item>
-
-            <BoardStatus
-              board={boards?.p2Board}
-              opponentName={info.player1}
-              measurements={{ x: parseInt(info.x, 10), y: parseInt(info.y, 10) }}
-              fleet={fleets.p1Fleet}
-            />
-          </Grid>
-
+          <BoardStatus
+            board={boards?.p2Board}
+            opponentName={info.player1}
+            measurements={{ x: parseInt(info.x, 10), y: parseInt(info.y, 10) }}
+            fleet={fleets.p1Fleet}
+          />
         </Grid>
 
-        <Box
-          style={{
-            padding: '15px',
-          }}
-        >
-          <Typography variant="subtitle1" gutterBottom component="div">
-            {`${(p1Turn ? info.player1 : info.player2)} valmistaudu`}
-          </Typography>
-          <Button onClick={() => setReady(true)}>Valmis</Button>
-        </Box>
-      </Box>
+      </Grid>
 
+      <Box
+        style={{
+          padding: '15px',
+        }}
+      >
+        <Typography variant="subtitle1" gutterBottom component="div">
+          {`${(p1Turn ? info.player1 : info.player2)} valmistaudu`}
+        </Typography>
+        <Button onClick={() => setReady(true)}>Valmis</Button>
+      </Box>
     </Box>
 
-  );
-};
+  </Box>
+
+);
 
 export default ReadyCheck;

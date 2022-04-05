@@ -7,8 +7,6 @@ import {
 /**
  * Pelilaudan tila
  * Näyttää käyttäjälle mihin kohtaan pelialustaa on hyökätty
- *
- *
  */
 const BoardStatus = ({
   measurements, fleet, board, opponentName, showShipPositions,
@@ -39,7 +37,7 @@ const BoardStatus = ({
       {board && (
       <>
         <Typography>
-          {`${opponentName}̈́ laivaston tila`}
+          {`${opponentName} laivasto`}
         </Typography>
         <Grid item xs={12}>
           {Array(measurements.y).fill(0).map((row, rowIndex) => (

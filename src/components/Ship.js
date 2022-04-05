@@ -18,9 +18,6 @@ function Ship({
   const mousePosition = useRef(initMousePosWithinObject);
   const orientation = useRef(horizontalOrientation);
 
-  const dimHor = useRef(null);
-  const dimVer = useRef(null);
-
   const inputEl = useRef(null);
   let ship = null;
 

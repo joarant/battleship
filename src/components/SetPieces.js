@@ -8,8 +8,9 @@ import Ship from './Ship';
  * Piirtää ruudukon johon pelaajat asettelevat aluksensa
  */
 
-function SetPieces({ info, shipsSet, p1Turn }) {
+function SetPieces({ info, setShips, p1Turn }) {
   const board = [];
+
   const x = parseInt(info.x, 10);
   const y = parseInt(info.y, 10);
 
@@ -20,6 +21,20 @@ function SetPieces({ info, shipsSet, p1Turn }) {
   const addInfoToBoardObject = (newObject, shipId) => {
     ships[shipId] = newObject;
   };
+
+  const isCoordinateFree = (point) => {
+    let free = true;
+
+    Object.values(ships).forEach((ship) => {
+      console.log(ship.coordinates.findIndex((coPoint) => coPoint === point));
+      if (ship.coordinates.findIndex((coPoint) => coPoint === point) !== -1) {
+        free = false;
+      }
+    });
+
+    return free;
+  };
+
   // tarkistaa liikkeen laillisuuden, jos laiton niin älä suorita
   const checkIfMoveIsLegal = (shipSize, shipOrientation, targetCell) => {
     // math.floor(target.id / rivin pituus) = sama kaikilla jotka ovat samassa rivissä
@@ -28,7 +43,9 @@ function SetPieces({ info, shipsSet, p1Turn }) {
       const refrenceNum = Math.floor(parseInt(targetCell.id, 10) / x);
       for (let index = 0; index < shipSize; index += 1) {
         const nextCell = document.getElementById(parseInt(targetCell.id, 10) + index);
-        if (nextCell === null) {
+
+        if (nextCell === null || !isCoordinateFree(nextCell.id)) {
+          console.log(isCoordinateFree(nextCell.id));
           return false;
         }
         if (!(Math.floor(parseInt(nextCell.id, 10) / x) === refrenceNum)) {
@@ -39,7 +56,8 @@ function SetPieces({ info, shipsSet, p1Turn }) {
       const refrenceNum = parseInt(targetCell.id, 10) % x;
       for (let index = 0; index < shipSize; index += 1) {
         const nextCell = document.getElementById(parseInt(targetCell.id, 10) + index * x);
-        if (nextCell === null) {
+        if (nextCell === null || !isCoordinateFree(nextCell.id)) {
+          console.log('false');
           return false;
         }
 
@@ -199,7 +217,7 @@ function SetPieces({ info, shipsSet, p1Turn }) {
         </Grid>
 
       </Grid>
-      <Button onClick={() => shipsSet(ships)} variant="outlined"> Valmis </Button>
+      <Button onClick={() => setShips(ships)} variant="outlined"> Valmis </Button>
 
     </>
   );

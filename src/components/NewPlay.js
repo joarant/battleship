@@ -27,7 +27,6 @@ const NewPlay = ({
   );
 
   const switchTurns = () => {
-    // setP1Turn(!p1Turn);
     setReadyCheckDone(false);
   };
 

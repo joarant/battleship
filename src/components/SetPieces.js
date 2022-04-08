@@ -22,12 +22,10 @@ function SetPieces({ info, setShips, p1Turn }) {
     ships[shipId] = newObject;
   };
 
-  const isCoordinateFree = (point) => {
+  const isCoordinateFree = (point, shipId) => {
     let free = true;
-
-    Object.values(ships).forEach((ship) => {
-      console.log(ship.coordinates.findIndex((coPoint) => coPoint === point));
-      if (ship.coordinates.findIndex((coPoint) => coPoint === point) !== -1) {
+    Object.keys(ships).filter((key) => key !== shipId).forEach((ship) => {
+      if (ships[ship].coordinates.findIndex((coPoint) => coPoint === point) !== -1) {
         free = false;
       }
     });
@@ -36,7 +34,7 @@ function SetPieces({ info, setShips, p1Turn }) {
   };
 
   // tarkistaa liikkeen laillisuuden, jos laiton niin älä suorita
-  const checkIfMoveIsLegal = (shipSize, shipOrientation, targetCell) => {
+  const checkIfMoveIsLegal = (shipSize, shipOrientation, targetCell, shipId) => {
     // math.floor(target.id / rivin pituus) = sama kaikilla jotka ovat samassa rivissä
     // mod(target.id/ rivin pituus) on sama kaikilla jotka ovat samassa pystyrivissä
     if (shipOrientation) {
@@ -44,8 +42,7 @@ function SetPieces({ info, setShips, p1Turn }) {
       for (let index = 0; index < shipSize; index += 1) {
         const nextCell = document.getElementById(parseInt(targetCell.id, 10) + index);
 
-        if (nextCell === null || !isCoordinateFree(nextCell.id)) {
-          console.log(isCoordinateFree(nextCell.id));
+        if (nextCell === null || !isCoordinateFree(nextCell.id, shipId)) {
           return false;
         }
         if (!(Math.floor(parseInt(nextCell.id, 10) / x) === refrenceNum)) {
@@ -56,7 +53,7 @@ function SetPieces({ info, setShips, p1Turn }) {
       const refrenceNum = parseInt(targetCell.id, 10) % x;
       for (let index = 0; index < shipSize; index += 1) {
         const nextCell = document.getElementById(parseInt(targetCell.id, 10) + index * x);
-        if (nextCell === null || !isCoordinateFree(nextCell.id)) {
+        if (nextCell === null || !isCoordinateFree(nextCell.id, shipId)) {
           console.log('false');
           return false;
         }
@@ -84,7 +81,7 @@ function SetPieces({ info, setShips, p1Turn }) {
         );
       }
       if (board.includes(correctCell?.id)
-      && checkIfMoveIsLegal(ships[shipId].size, horizontalOrientation, correctCell)) {
+      && checkIfMoveIsLegal(ships[shipId].size, horizontalOrientation, correctCell, shipId)) {
         const rect = correctCell.getBoundingClientRect();
 
         correctCell.appendChild(document.getElementById(shipId));

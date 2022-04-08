@@ -8,8 +8,6 @@ import BoardCell from './BoardCell';
  * Varsinainen pelin pelaaminen taphtuu täällä
  * Piirtää nappuloilla täytetyn ruudukon
  * Pelaajat painavat nappuloita arvataksensa vastustajan alusten paikan
- *
- *
  */
 function Play({
   measurements, ships, updateBoardStatus, currentBoard,

@@ -10,13 +10,14 @@ const BoardCell = ({
   const [disabled, setDisabled] = useState(isDisabled);
 
   const getColor = () => {
-    if (ship && isDisabled) {
+    console.log(fleet[shipId], isDisabled, ship);
+    if (ship && (isDisabled || disabled)) {
       if (fleet[shipId].hitpoints === 0) {
         return 'black';
       }
       return 'darkred';
     }
-    if (!ship && isDisabled) {
+    if (!ship && (isDisabled || disabled)) {
       return '#808080';
     }
     return 'white';

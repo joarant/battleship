@@ -7,36 +7,33 @@ import calculateHitpoints from '../utils/calculateHitpoints';
 /**
  * Informoi pelaajia hitpoint tilanteesta
  * Sisältää END GAME painikkeen jolla pelin saa loppumaan heti
- *
- *
  */
 
 const GameStatus = ({
-  fleets, gameOverFunc, info,
+  fleets, gameOverFunc, info, health,
 }) => (
   <Box style={{
-    display: 'flex', justifyContent: 'flex-end',
   }}
   >
     <Grid>
       <Typography>
-        Fleet status:
+        Laivastojen tila:
       </Typography>
 
       <Typography>
-        {`${info.player1} elämäpisteitä: ${calculateHitpoints(Object.values(fleets.p1Fleet))}`}
+        {`${info.player1} elämäpisteitä: ${health.p1}`}
       </Typography>
 
       <Typography>
-        {`${info.player2} elämäpisteitä: ${calculateHitpoints(Object.values(fleets.p2Fleet))}`}
+        {`${info.player2} elämäpisteitä: ${health.p2}`}
       </Typography>
 
       <Button
-        style={{ alignContent: 'center', backgroundColor: '#ffffff', color: 'black' }}
+        style={{ alignContent: 'center', backgroundColor: 'red', color: 'black' }}
         variant="contained"
         onClick={() => gameOverFunc()}
       >
-        End Game
+        Lopeta Peli
       </Button>
     </Grid>
   </Box>

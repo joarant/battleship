@@ -1,10 +1,6 @@
 import React, { useState } from 'react';
-import { Grid } from '@material-ui/core';
 import GameInit from './GameInit';
 import SetPieces from './SetPieces';
-import Play from './Play';
-import ReadyCheck from './ReadyCheck';
-import GameStatus from './GameStatusScreen';
 import calculateHitpoints from '../utils/calculateHitpoints';
 import GameOverScreen from './GameOverScreen';
 import NewPlay from './NewPlay';
@@ -29,9 +25,8 @@ const GameNew = () => {
   const [initInfo, setInitInfo] = useState();
   const [p1ShipsSet, setP1ShipsSet] = useState(false);
   const [p2ShipsSet, setP2ShipsSet] = useState(false);
-  const [p1Turn, setP1Turn] = useState(true);
   const [gameOver, setGameOver] = useState(false);
-  const [ReadyCheckDone, setReadyCheckDone] = useState(false);
+
   // laivatyypit
   const shipObjects = {
     carrier: {
@@ -65,10 +60,6 @@ const GameNew = () => {
     infoTemp.availableShips = availableShips;
     setInitInfo(infoTemp);
   };
-  // funktioita joilla säädellään pelintilaa
-  const setReady = (state) => {
-    setReadyCheckDone(state);
-  };
 
   const setGameDone = () => {
     setGameOver(true);
@@ -93,7 +84,16 @@ const GameNew = () => {
       setP2ShipsSet(true);
     }
   };
-  // initialBoards, info, initialfleets, endGame, readyCheck
+
+  const reset = () => {
+    setBoards({ p1Board: {}, p2Board: {} });
+    setHitpoints({ p1: 0, p2: 0 });
+    setInitInfo();
+    setP1ShipsSet(false);
+    setP2ShipsSet(false);
+    setGameOver(false);
+  };
+
   return (
     <>
       {!initInfo && !p1ShipsSet && !p2ShipsSet && (<GameInit setGameParameters={setInfo} />)}
@@ -117,6 +117,7 @@ const GameNew = () => {
 
       {gameOver && (
       <GameOverScreen
+        resetfunc={reset}
         boards={boards}
         info={initInfo}
         fleets={fleets}

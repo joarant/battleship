@@ -11,7 +11,7 @@ import calculateHitpoints from '../utils/calculateHitpoints';
  * Paljastaa pelin voittajan
  */
 const GameOverScreen = ({
-  boards, info, fleets,
+  boards, info, fleets, resetfunc,
 }) => {
   const getWinner = () => {
     const h1 = calculateHitpoints(Object.values(fleets.p1Fleet));
@@ -79,9 +79,9 @@ const GameOverScreen = ({
           <Typography variant="h5" gutterBottom component="div">
             {`${getWinner()} `}
           </Typography>
-          <Typography variant="subtitle1" gutterBottom component="div">
-            Virkistä pelataksesi uudestaan.
-          </Typography>
+          <Button onClick={() => resetfunc()}>
+            Pelaa uudestaan
+          </Button>
         </Box>
       </Box>
 

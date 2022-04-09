@@ -1,17 +1,17 @@
-import React, { useEffect, useState } from 'react';
+import React, { useState } from 'react';
 import {
   Button, Box, Typography, Grid,
 } from '@material-ui/core';
 import BoardStatus from './BoardStatus';
 import Play from './Play';
 import calculateHitpoints from '../utils/calculateHitpoints';
-import GameStatus from './GameStatusScreen';
+import Health from './PlayerHealth';
 
 /**
  * Sisältää molempien pelaajien pelilautojen tilan,
  * sekä toimii valmiustarkastuksena vuorojen välissä
  */
-const NewPlay = ({
+const GameplaySection = ({
   initialBoards, info, initialfleets, endGame,
 }) => {
   const [p1Turn, setP1Turn] = useState(false);
@@ -137,7 +137,7 @@ const NewPlay = ({
 
         </Box>
         )}
-        <GameStatus fleets={fleets} gameOverFunc={endGame} info={info} health={hitpoints} />
+        <Health fleets={fleets} gameOverFunc={endGame} info={info} health={hitpoints} />
 
       </Box>
 
@@ -146,4 +146,4 @@ const NewPlay = ({
   );
 };
 
-export default NewPlay;
+export default GameplaySection;

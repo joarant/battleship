@@ -1,18 +1,15 @@
 import React, { useState } from 'react';
-import { Grid } from '@material-ui/core';
 import GameInit from './GameInit';
 import SetPieces from './SetPieces';
-import Play from './Play';
-import ReadyCheck from './ReadyCheck';
-import GameStatus from './GameStatusScreen';
 import calculateHitpoints from '../utils/calculateHitpoints';
 import GameOverScreen from './GameOverScreen';
+import GameplaySection from './GameplaySection';
 
 /**
  * Sisältää peli elementit ja seuraa pelin tilaa
  */
 
-const Game = () => {
+const GameNew = () => {
   // id :{hit:false, ship: false}
   const [fleets, setFleets] = useState({
     p1Fleet: {
@@ -28,25 +25,24 @@ const Game = () => {
   const [initInfo, setInitInfo] = useState();
   const [p1ShipsSet, setP1ShipsSet] = useState(false);
   const [p2ShipsSet, setP2ShipsSet] = useState(false);
-  const [p1Turn, setP1Turn] = useState(true);
   const [gameOver, setGameOver] = useState(false);
-  const [ReadyCheckDone, setReadyCheckDone] = useState(false);
+
   // laivatyypit
   const shipObjects = {
     carrier: {
-      type: 'CARRIER', size: 5, hitpoints: 0, coordinates: [],
+      type: 'CARRIER', size: 5, hitpoints: 0, coordinates: [], image: 'images/carrier.svg',
     },
     battleship: {
-      type: 'BATTLESHIP', size: 4, hitpoints: 0, coordinates: [],
+      type: 'BATTLESHIP', size: 4, hitpoints: 0, coordinates: [], image: 'images/battleship.svg',
     },
     cruiser: {
-      type: 'CRUISER', size: 3, hitpoints: 0, coordinates: [],
+      type: 'CRUISER', size: 3, hitpoints: 0, coordinates: [], image: 'images/cruiser.svg',
     },
     submarine: {
-      type: 'SUBMARINE', size: 3, hitpoints: 0, coordinates: [],
+      type: 'SUBMARINE', size: 3, hitpoints: 0, coordinates: [], image: 'images/submarine.svg',
     },
     destroyer: {
-      type: 'DESTROYER', size: 2, hitpoints: 0, coordinates: [],
+      type: 'DESTROYER', size: 2, hitpoints: 0, coordinates: [], image: 'images/destroyer.svg',
     },
   };
   // Tuo pelin pystytykseen liittyvät asetukset tänne
@@ -64,10 +60,6 @@ const Game = () => {
     infoTemp.availableShips = availableShips;
     setInitInfo(infoTemp);
   };
-  // funktioita joilla säädellään pelintilaa
-  const setReady = (state) => {
-    setReadyCheckDone(state);
-  };
 
   const setGameDone = () => {
     setGameOver(true);
@@ -77,45 +69,29 @@ const Game = () => {
     setGameDone();
   }
 
-  const switchTurns = () => {
-    setP1Turn(!p1Turn);
-    setReadyCheckDone(false);
-  };
-  const updateStatus = (board, ship) => {
-    const tempBoards = boards;
-    tempBoards[(p1Turn ? 'p1Board' : 'p2Board')] = board;
-    if (ship != null) {
-      const tempShips = fleets;
-      tempShips[(p1Turn ? 'p2Fleet' : 'p1Fleet')][ship].hitpoints -= 1;
-      setFleets(tempShips);
-      setHitpoints({
-        p1: calculateHitpoints(Object.values(tempShips.p1Fleet)),
-        p2: calculateHitpoints(Object.values(tempShips.p2Fleet)),
-      });
-
-      if (tempShips[(p1Turn ? 'p2Fleet' : 'p1Fleet')][ship].hitpoints === 0) {
-        switchTurns();
-      }
-    } else {
-      switchTurns();
-    }
-    setBoards(tempBoards);
-  };
-
   const setFleet = (fleet) => {
     const tempShips = fleets;
     tempShips[(!p1ShipsSet && !p2ShipsSet ? 'p1Fleet' : 'p2Fleet')] = fleet;
+    setFleets(tempShips);
+    setHitpoints({
+      p1: calculateHitpoints(Object.values(tempShips.p1Fleet)),
+      p2: calculateHitpoints(Object.values(tempShips.p2Fleet)),
+    });
 
     if (!p1ShipsSet) {
       setP1ShipsSet(true);
     } else {
       setP2ShipsSet(true);
     }
-    setFleets(tempShips);
-    setHitpoints({
-      p1: calculateHitpoints(Object.values(tempShips.p1Fleet)),
-      p2: calculateHitpoints(Object.values(tempShips.p2Fleet)),
-    });
+  };
+
+  const reset = () => {
+    setBoards({ p1Board: {}, p2Board: {} });
+    setHitpoints({ p1: 0, p2: 0 });
+    setInitInfo();
+    setP1ShipsSet(false);
+    setP2ShipsSet(false);
+    setGameOver(false);
   };
 
   return (
@@ -127,56 +103,21 @@ const Game = () => {
       {initInfo && !p2ShipsSet && p1ShipsSet && (
       <SetPieces info={initInfo} setShips={setFleet} p1Turn={false} />)}
 
-      {p1ShipsSet && p2ShipsSet && !gameOver && p1Turn && !ReadyCheckDone
+      {p1ShipsSet && p2ShipsSet && !gameOver
       && (
-      <ReadyCheck
-        setReady={setReady}
-        boards={boards}
+      <GameplaySection
+        // setReady={setReady}
+        initialBoards={boards}
         info={initInfo}
-        p1Turn={p1Turn}
-        fleets={fleets}
+        // p1Turn={p1Turn}
+        initialfleets={fleets}
+        endGame={setGameDone}
       />
-      )}
-
-      {p1ShipsSet && p2ShipsSet && !gameOver && p1Turn && ReadyCheckDone
-      && (
-      <Grid>
-        <GameStatus fleets={fleets} gameOverFunc={setGameDone} info={initInfo} />
-        <Play
-          measurements={{ x: parseInt(initInfo.x, 10), y: parseInt(initInfo.y, 10) }}
-          ships={fleets.p2Fleet}
-          updateBoardStatus={updateStatus}
-          currentBoard={boards.p1Board}
-        />
-      </Grid>
-      )}
-
-      {p1ShipsSet && p2ShipsSet && !gameOver && !p1Turn && !ReadyCheckDone
-      && (
-      <ReadyCheck
-        setReady={setReady}
-        boards={boards}
-        info={initInfo}
-        p1Turn={p1Turn}
-        fleets={fleets}
-      />
-      )}
-
-      {p1ShipsSet && p2ShipsSet && !gameOver && !p1Turn && ReadyCheckDone
-      && (
-      <>
-        <GameStatus fleets={fleets} gameOverFunc={setGameDone} info={initInfo} />
-        <Play
-          measurements={{ x: parseInt(initInfo.x, 10), y: parseInt(initInfo.y, 10) }}
-          ships={fleets.p1Fleet}
-          updateBoardStatus={updateStatus}
-          currentBoard={boards.p2Board}
-        />
-      </>
       )}
 
       {gameOver && (
       <GameOverScreen
+        resetfunc={reset}
         boards={boards}
         info={initInfo}
         fleets={fleets}
@@ -187,4 +128,4 @@ const Game = () => {
   );
 };
 
-export default Game;
+export default GameNew;

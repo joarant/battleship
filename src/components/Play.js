@@ -1,6 +1,6 @@
-import React, { useEffect, useState } from 'react';
+import React from 'react';
 import {
-  Grid, Paper, Button,
+  Grid,
 } from '@material-ui/core';
 import BoardCell from './BoardCell';
 
@@ -12,7 +12,7 @@ import BoardCell from './BoardCell';
 function Play({
   measurements, ships, updateBoardStatus, currentBoard,
 }) {
-  const [board, setBoard] = useState(currentBoard);
+  const board = currentBoard;
 
   // Luo ruudut
   const tempBoard = currentBoard;

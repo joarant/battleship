@@ -1,5 +1,5 @@
-import React, { useEffect, useState } from 'react';
-import { Button, Box, Typography } from '@material-ui/core';
+import React, { useState } from 'react';
+import { Button } from '@material-ui/core';
 /**
  * Varsinaisen gameplayn aikan käytetty pelinappula
  * sisältää tiedon siitä vastaako tämä ruutu jotain aluksen osaa ja on tähän ruutuun osuttu
@@ -10,7 +10,6 @@ const BoardCell = ({
   const [disabled, setDisabled] = useState(isDisabled);
 
   const getColor = () => {
-    console.log(fleet[shipId], isDisabled, ship);
     if (ship && (isDisabled || disabled)) {
       if (fleet[shipId].hitpoints === 0) {
         return 'black';

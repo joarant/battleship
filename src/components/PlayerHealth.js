@@ -1,16 +1,15 @@
-import React, { useEffect, useState } from 'react';
+import React from 'react';
 import {
   Button, Box, Typography, Grid,
 } from '@material-ui/core';
-import calculateHitpoints from '../utils/calculateHitpoints';
 
 /**
  * Informoi pelaajia hitpoint tilanteesta
  * Sisältää END GAME painikkeen jolla pelin saa loppumaan heti
  */
 
-const GameStatus = ({
-  fleets, gameOverFunc, info, health,
+const Health = ({
+  gameOverFunc, info, health,
 }) => {
   if (health.p1 === 0 || health.p2 === 0) {
     gameOverFunc();
@@ -43,4 +42,4 @@ const GameStatus = ({
   );
 };
 
-export default GameStatus;
+export default Health;

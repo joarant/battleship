@@ -1,11 +1,11 @@
 Vaatimukset: \
 Nodejs \
-npm \
+npm 
 
 
 Projektin ajo: \
 npm install \
-npm run \
+npm run 
 
 Tekijä: 
 Joakim Rantala (515863)

@@ -6,7 +6,7 @@ import React, { useEffect, useState, useRef } from 'react';
  * Käytetään vain alusten asettelussa
  */
 function Ship({
-  sprite, size, setShip, imgId,
+  sourceImage, size, setShip, imgId,
 }) {
   const [mouseTransparent, setMouseTransparent] = useState(false);
   const [horizontalOrientation, setHorizontalOrientation] = useState(true);
@@ -97,6 +97,7 @@ function Ship({
 
     dragEle.onmousedown = dragMouseDown;
   }
+  console.log(sourceImage);
   // suorittaa, kun elementit html elementit ovat olemassa
   useEffect(() => {
     ship = document.getElementById(imgId);
@@ -108,7 +109,7 @@ function Ship({
     <img
       id={imgId}
       // src={(horizontalOrientation ? 'images/arrow.svg' : 'images/arrow2.svg')}
-      src="images/arrow.svg"
+      src={sourceImage}
       alt=""
       ref={inputEl}
       // width={60 * (horizontalOrientation ? size : 1)}

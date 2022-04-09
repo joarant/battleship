@@ -198,12 +198,12 @@ function SetPieces({ info, setShips, p1Turn }) {
                     backgroundColor: 'white',
                   }}
                   style={{ position: 'relative' }}
-
                 >
                   <Ship
                     imgId={ship}
                     setShip={changeMovedObject}
                     size={ships[ship].size}
+                    sourceImage={ships[ship].image}
                   />
                 </Paper>
               </Grid>

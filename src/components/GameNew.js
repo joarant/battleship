@@ -30,19 +30,19 @@ const GameNew = () => {
   // laivatyypit
   const shipObjects = {
     carrier: {
-      type: 'CARRIER', size: 5, hitpoints: 0, coordinates: [],
+      type: 'CARRIER', size: 5, hitpoints: 0, coordinates: [], image: 'images/carrier.svg',
     },
     battleship: {
-      type: 'BATTLESHIP', size: 4, hitpoints: 0, coordinates: [],
+      type: 'BATTLESHIP', size: 4, hitpoints: 0, coordinates: [], image: 'images/battleship.svg',
     },
     cruiser: {
-      type: 'CRUISER', size: 3, hitpoints: 0, coordinates: [],
+      type: 'CRUISER', size: 3, hitpoints: 0, coordinates: [], image: 'images/cruiser.svg',
     },
     submarine: {
-      type: 'SUBMARINE', size: 3, hitpoints: 0, coordinates: [],
+      type: 'SUBMARINE', size: 3, hitpoints: 0, coordinates: [], image: 'images/submarine.svg',
     },
     destroyer: {
-      type: 'DESTROYER', size: 2, hitpoints: 0, coordinates: [],
+      type: 'DESTROYER', size: 2, hitpoints: 0, coordinates: [], image: 'images/destroyer.svg',
     },
   };
   // Tuo pelin pystytykseen liittyvät asetukset tänne

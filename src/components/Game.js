@@ -9,7 +9,7 @@ import GameplaySection from './GameplaySection';
  * Sisältää peli elementit ja seuraa pelin tilaa
  */
 
-const GameNew = () => {
+const Game = () => {
   // id :{hit:false, ship: false}
   const [fleets, setFleets] = useState({
     p1Fleet: {
@@ -19,8 +19,7 @@ const GameNew = () => {
 
     },
   });
-  const [boards, setBoards] = useState({ p1Board: {}, p2Board: {} });
-  const [hitpoints, setHitpoints] = useState({ p1: 0, p2: 0 });
+  const [boards, setBoards] = useState();
 
   const [initInfo, setInitInfo] = useState();
   const [p1ShipsSet, setP1ShipsSet] = useState(false);
@@ -65,29 +64,50 @@ const GameNew = () => {
     setGameOver(true);
   };
 
-  if ((hitpoints.p1 === 0 || hitpoints.p2 === 0) && !gameOver && (p1ShipsSet && p2ShipsSet)) {
-    setGameDone();
-  }
+  const createInitBoard = (measurements, fleet) => {
+    const tempBoard = {};
+    if (Object.keys(tempBoard).length === 0) {
+      for (let index = 0; index < measurements.x * measurements.y; index += 1) {
+        tempBoard[index] = { hit: false, ship: false, shipId: null };
+      }
+      Object.entries(fleet).forEach((ship) => {
+        ship[1].coordinates.forEach((point) => {
+          tempBoard[point].ship = true;
+          // eslint-disable-next-line prefer-destructuring
+          tempBoard[point].shipId = ship[0];
+        });
+      });
+    }
+    return tempBoard;
+  };
 
   const setFleet = (fleet) => {
     const tempShips = fleets;
     tempShips[(!p1ShipsSet && !p2ShipsSet ? 'p1Fleet' : 'p2Fleet')] = fleet;
     setFleets(tempShips);
-    setHitpoints({
-      p1: calculateHitpoints(Object.values(tempShips.p1Fleet)),
-      p2: calculateHitpoints(Object.values(tempShips.p2Fleet)),
-    });
 
     if (!p1ShipsSet) {
       setP1ShipsSet(true);
     } else {
       setP2ShipsSet(true);
+
+      setBoards({
+        p1Board:
+         createInitBoard(
+           { x: parseInt(initInfo.x, 10), y: parseInt(initInfo.y, 10) },
+           fleets.p2Fleet,
+         ),
+        p2Board:
+         createInitBoard(
+           { x: parseInt(initInfo.x, 10), y: parseInt(initInfo.y, 10) },
+           fleets.p1Fleet,
+         ),
+      });
     }
   };
 
   const reset = () => {
-    setBoards({ p1Board: {}, p2Board: {} });
-    setHitpoints({ p1: 0, p2: 0 });
+    setBoards();
     setInitInfo();
     setP1ShipsSet(false);
     setP2ShipsSet(false);
@@ -106,10 +126,8 @@ const GameNew = () => {
       {p1ShipsSet && p2ShipsSet && !gameOver
       && (
       <GameplaySection
-        // setReady={setReady}
         initialBoards={boards}
         info={initInfo}
-        // p1Turn={p1Turn}
         initialfleets={fleets}
         endGame={setGameDone}
       />
@@ -128,4 +146,4 @@ const GameNew = () => {
   );
 };
 
-export default GameNew;
+export default Game;

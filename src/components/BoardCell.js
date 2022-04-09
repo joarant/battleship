@@ -1,3 +1,4 @@
+/* eslint-disable jsx-a11y/media-has-caption */
 import React, { useState } from 'react';
 import { Button } from '@material-ui/core';
 /**
@@ -8,6 +9,20 @@ const BoardCell = ({
   setReady, isDisabled, cellId, ship, fleet, shipId,
 }) => {
   const [disabled, setDisabled] = useState(isDisabled);
+
+  const playaudio = () => {
+    if (ship) {
+      const x = document.getElementById('myAudio1');
+      x.load();
+      x.volume = 0.2;
+      x.play();
+    } else {
+      const x = document.getElementById('myAudio2');
+      x.load();
+      x.volume = 0.2;
+      x.play();
+    }
+  };
 
   const getColor = () => {
     if (ship && (isDisabled || disabled)) {
@@ -31,7 +46,7 @@ const BoardCell = ({
       style={{ backgroundColor: getColor() }}
       variant="contained"
       disabled={disabled}
-      onClick={() => { setDisabled(true); setReady(cellId); }}
+      onClick={() => { setDisabled(true); setReady(cellId); playaudio(); }}
     />
   );
 };

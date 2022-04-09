@@ -31,8 +31,9 @@ const Health = ({
         </Typography>
 
         <Button
-          style={{ alignContent: 'center', backgroundColor: 'red', color: 'black' }}
-          variant="contained"
+          variant="outlined"
+          color="error"
+          style={{ alignContent: 'center' }}
           onClick={() => gameOverFunc()}
         >
           Lopeta Peli

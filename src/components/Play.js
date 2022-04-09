@@ -14,25 +14,10 @@ function Play({
 }) {
   const board = currentBoard;
 
-  // Luo ruudut
-  const tempBoard = currentBoard;
-  if (Object.keys(tempBoard).length === 0) {
-    for (let index = 0; index < measurements.x * measurements.y; index += 1) {
-      tempBoard[index] = { hit: false, ship: false, shipId: null };
-    }
-    Object.entries(ships).forEach((ship) => {
-      ship[1].coordinates.forEach((point) => {
-        board[point].ship = true;
-        // eslint-disable-next-line prefer-destructuring
-        board[point].shipId = ship[0];
-      });
-    });
-  }
-
   // tuo pelitilan muutoksen parent elementtiin
   const updateBoard = (cell) => {
-    tempBoard[cell].hit = true;
-    updateBoardStatus(tempBoard, tempBoard[cell]?.shipId);
+    board[cell].hit = true;
+    updateBoardStatus(board, board[cell]?.shipId);
   };
 
   return (
@@ -45,10 +30,10 @@ function Play({
                 id={measurements.x * rowIndex + index}
                 cellId={measurements.x * rowIndex + index}
                 setReady={updateBoard}
-                isDisabled={tempBoard[measurements.x * rowIndex + index].hit}
-                ship={tempBoard[measurements.x * rowIndex + index].ship}
+                isDisabled={board[measurements.x * rowIndex + index].hit}
+                ship={board[measurements.x * rowIndex + index].ship}
                 fleet={ships}
-                shipId={tempBoard[measurements.x * rowIndex + index].shipId}
+                shipId={board[measurements.x * rowIndex + index].shipId}
               />
             </Grid>
           ))}

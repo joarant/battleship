@@ -97,7 +97,6 @@ function Ship({
 
     dragEle.onmousedown = dragMouseDown;
   }
-  console.log(sourceImage);
   // suorittaa, kun elementit html elementit ovat olemassa
   useEffect(() => {
     ship = document.getElementById(imgId);

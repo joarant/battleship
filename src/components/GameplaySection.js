@@ -1,3 +1,4 @@
+/* eslint-disable jsx-a11y/media-has-caption */
 import React, { useState } from 'react';
 import {
   Button, Box, Typography, Grid,
@@ -66,6 +67,18 @@ const GameplaySection = ({
 
       }}
     >
+      <audio id="myAudio1">
+        <source
+          src="audio/mixkit-explosion-hit-1704.wav"
+          type="audio/wav"
+        />
+      </audio>
+      <audio id="myAudio2">
+        <source
+          src="audio/mixkit-sea-mine-explosion-1184.wav"
+          type="audio/wav"
+        />
+      </audio>
       <Box style={{
         top: '5%',
         position: 'absolute',
@@ -128,7 +141,9 @@ const GameplaySection = ({
             {`${(!p1Turn ? info.player1 : info.player2)} valmistaudu`}
           </Typography>
           <Button
-            style={{ backgroundColor: 'Green', color: 'black' }}
+            variant="outlined"
+            color="success"
+            style={{ }}
             onClick={() => { setP1Turn(!p1Turn); setReadyCheckDone(true); }}
           >
             Valmis

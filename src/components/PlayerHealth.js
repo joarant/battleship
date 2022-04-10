@@ -4,7 +4,7 @@ import {
 } from '@material-ui/core';
 
 /**
- * Informoi pelaajia hitpoint tilanteesta
+ * Pelaajien terveydet
  * Sisältää END GAME painikkeen jolla pelin saa loppumaan heti
  */
 

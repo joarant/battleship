@@ -1,12 +1,16 @@
 import React, { useState } from 'react';
 import GameInit from './GameInit';
 import SetPieces from './SetPieces';
-import calculateHitpoints from '../utils/calculateHitpoints';
 import GameOverScreen from './GameOverScreen';
 import GameplaySection from './GameplaySection';
 
 /**
- * Sisältää peli elementit ja seuraa pelin tilaa
+ * Sisältää pelielementit
+ * Sisältää logiikan elementtien näyttämiselle oikeaan aikaan
+ *  - Kysy käyttäjältä tiedot
+ *  - Aseta alukset
+ *  - Ammu aluksia kunnes peli on ohi
+ *  - Näytä peliohi ruutu
  */
 
 const Game = () => {
@@ -19,8 +23,9 @@ const Game = () => {
 
     },
   });
-  const [boards, setBoards] = useState();
 
+  const [boards, setBoards] = useState();
+  // käyttäjän antamat tiedot
   const [initInfo, setInitInfo] = useState();
   const [p1ShipsSet, setP1ShipsSet] = useState(false);
   const [p2ShipsSet, setP2ShipsSet] = useState(false);
@@ -44,6 +49,7 @@ const Game = () => {
       type: 'DESTROYER', size: 2, hitpoints: 0, coordinates: [], image: 'images/destroyer.svg',
     },
   };
+
   // Tuo pelin pystytykseen liittyvät asetukset tänne
   const setInfo = (info) => {
     const availableShips = {};

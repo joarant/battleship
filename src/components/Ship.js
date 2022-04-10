@@ -49,7 +49,7 @@ function Ship({
       : Math.floor(mousePosition.current.y / 60));
     setShip(imgId, grabCell, orientation.current);
   };
-
+  // sitoo elementtiin raahaamiseen liittyvät kuuntelijat
   function dragElement(elmnt) {
     const dragEle = elmnt;
     let pos1 = 0; let pos2 = 0; let pos3 = 0; let
@@ -107,12 +107,9 @@ function Ship({
   return (
     <img
       id={imgId}
-      // src={(horizontalOrientation ? 'images/arrow.svg' : 'images/arrow2.svg')}
       src={sourceImage}
       alt=""
       ref={inputEl}
-      // width={60 * (horizontalOrientation ? size : 1)}
-      // height={60 * (horizontalOrientation ? 1 : size)}
       width={60 * size}
       height={60}
       style={{
@@ -120,11 +117,8 @@ function Ship({
         pointerEvents: (transparent.current ? 'none' : 'auto'),
         top: '0%',
         left: '0%',
-        // msTransform: 'translate(0%, 0%)',
         transform: 'translate(0%, 0%)',
         zIndex: 100,
-        // left: (mouseTransparent ? 'inherit' : 'inherit'),
-        // top: (mouseTransparent ? 'inherit' : 'inherit'),
 
       }}
     />

@@ -6,8 +6,6 @@ import {
 
 /**
  * Pelin pystyttämiseen liittyvät asetukset
- *
- *
  */
 const GameInit = ({ setGameParameters }) => {
   const [minSize, setMinSize] = useState(0);
@@ -29,6 +27,7 @@ const GameInit = ({ setGameParameters }) => {
       validate={(values) => {
         const errors = {};
         let tmpMinSize = 0;
+        // varmistaa että luvut ovat valideja ja laskee alusten koon
         Object.keys(shipFields).forEach((element) => {
           tmpMinSize += (values[element] && regex.test(values[element])
             ? shipFields[element] * parseInt(values[element], 10) : 0);
@@ -70,11 +69,7 @@ const GameInit = ({ setGameParameters }) => {
       render={({
         submitError,
         handleSubmit,
-        form,
         submitting,
-        touched,
-        pristine,
-        values,
         errors,
       }) => (
         <form onSubmit={handleSubmit}>

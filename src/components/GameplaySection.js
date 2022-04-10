@@ -9,8 +9,7 @@ import calculateHitpoints from '../utils/calculateHitpoints';
 import Health from './PlayerHealth';
 
 /**
- * Sisältää molempien pelaajien pelilautojen tilan,
- * sekä toimii valmiustarkastuksena vuorojen välissä
+ * Sisältää pelinpelaamiseen liittyvät komponentit
  */
 const GameplaySection = ({
   initialBoards, info, initialfleets, endGame,
@@ -30,7 +29,7 @@ const GameplaySection = ({
   const switchTurns = () => {
     setReadyCheckDone(false);
   };
-
+  // antaa pelintilan isäntä elementille
   const updateStatus = (board, ship) => {
     const tempBoards = boards;
     tempBoards[(p1Turn ? 'p1Board' : 'p2Board')] = board;
@@ -67,12 +66,14 @@ const GameplaySection = ({
 
       }}
     >
+      {/* Osuma ääniefekti */}
       <audio id="myAudio1">
         <source
           src="audio/mixkit-explosion-hit-1704.wav"
           type="audio/wav"
         />
       </audio>
+      {/* huti ääniefekti */}
       <audio id="myAudio2">
         <source
           src="audio/mixkit-sea-mine-explosion-1184.wav"

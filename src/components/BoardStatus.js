@@ -5,12 +5,13 @@ import {
 } from '@material-ui/core';
 
 /**
- * Pelilaudan tila
+ * Pelilaudan tila kuvattu epäinteraktiivisina ruutuina
  * Näyttää käyttäjälle mihin kohtaan pelialustaa on hyökätty
  */
 const BoardStatus = ({
   measurements, fleet, board, opponentName, showShipPositions,
 }) => {
+  // ruudun väri
   const getColor = (cellStatus) => {
     if (cellStatus) {
       if (cellStatus.ship && !cellStatus.hit && showShipPositions) {

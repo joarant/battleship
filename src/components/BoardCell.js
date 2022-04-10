@@ -2,14 +2,14 @@
 import React, { useState } from 'react';
 import { Button } from '@material-ui/core';
 /**
- * Varsinaisen gameplayn aikan käytetty pelinappula
- * sisältää tiedon siitä vastaako tämä ruutu jotain aluksen osaa ja on tähän ruutuun osuttu
+ * Pelinappula
  */
 const BoardCell = ({
   setReady, isDisabled, cellId, ship, fleet, shipId,
 }) => {
   const [disabled, setDisabled] = useState(isDisabled);
 
+  // painalluksesta kuuluva ääni
   const playaudio = () => {
     if (ship) {
       const x = document.getElementById('myAudio1');
@@ -24,6 +24,7 @@ const BoardCell = ({
     }
   };
 
+  // nappulan väri
   const getColor = () => {
     if (ship && (isDisabled || disabled)) {
       if (fleet[shipId].hitpoints === 0) {

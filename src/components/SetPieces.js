@@ -21,11 +21,11 @@ function SetPieces({ info, setShips, p1Turn }) {
   const addInfoToBoardObject = (newObject, shipId) => {
     ships[shipId] = newObject;
   };
-
+  // tarkistaa onko ruudukossa jo joku muu alus
   const isCoordinateFree = (point, shipId) => {
     let free = true;
     Object.keys(ships).filter((key) => key !== shipId).forEach((ship) => {
-      if (ships[ship].coordinates.findIndex((coPoint) => coPoint === point) !== -1) {
+      if (ships[ship].coordinates.findIndex((cPoint) => cPoint === point) !== -1) {
         free = false;
       }
     });
@@ -54,7 +54,6 @@ function SetPieces({ info, setShips, p1Turn }) {
       for (let index = 0; index < shipSize; index += 1) {
         const nextCell = document.getElementById(parseInt(targetCell.id, 10) + index * x);
         if (nextCell === null || !isCoordinateFree(nextCell.id, shipId)) {
-          console.log('false');
           return false;
         }
 
@@ -82,8 +81,6 @@ function SetPieces({ info, setShips, p1Turn }) {
       }
       if (board.includes(correctCell?.id)
       && checkIfMoveIsLegal(ships[shipId].size, horizontalOrientation, correctCell, shipId)) {
-        const rect = correctCell.getBoundingClientRect();
-
         correctCell.appendChild(document.getElementById(shipId));
 
         if (horizontalOrientation) {
@@ -116,6 +113,7 @@ function SetPieces({ info, setShips, p1Turn }) {
             hitpoints: coordinateArray.length,
           },
         }, shipId);
+        // jos liike on laiton niin alus palaa paikalleen
       } else if (horizontalOrientation) {
         draggable.style.left = '0px';
         draggable.style.top = '0px';
@@ -127,7 +125,7 @@ function SetPieces({ info, setShips, p1Turn }) {
       }
     }, { once: true });
   };
-  // luo ruudukon
+  // luo ruudukkoon liittyvän arrayn
   for (let index = 0; index < y; index += 1) {
     for (let a = 0; a < x; a += 1) {
       board.push((index * y + a).toString());

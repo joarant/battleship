@@ -90,7 +90,7 @@ const GameplaySection = ({
           container
           spacing={5}
         >
-
+          {/* Yhden pelaajan laivasto on toisen pelaajan laudalla */}
           <Grid item>
             {!p1Turn && readyCheckDone
               ? (

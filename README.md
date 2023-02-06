@@ -8,7 +8,7 @@ npm install \
 npm run 
 
 Tekijä: 
-Joakim Rantala (515863)
+Joakim Rantala
 
 
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
